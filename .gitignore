@@ -1,0 +1,21 @@
+##### Beginning of file
+
+.DS_Store
+
+*.jl.cov
+*.jl.*.cov
+*.jl.mem
+*.jls
+
+deps/downloads/
+deps/usr/
+deps/deps.jl
+
+*.log
+
+compiled/
+
+Manifest.toml
+
+##### End of file
+
