@@ -57,7 +57,7 @@ function _build_git()::String
     return git_cmd
 end
 
-function _build_mirrorupdater()::Nothing
+function _build_organizationsnapshots()::Nothing
     git_cmd = _build_git()
     build_jl_file_path = strip(
         abspath(
@@ -105,6 +105,6 @@ function _build_mirrorupdater()::Nothing
     return nothing
 end
 
-_build_mirrorupdater()
+_build_organizationsnapshots()
 
 ##### End of file
