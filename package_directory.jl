@@ -33,7 +33,7 @@ end
 """
     package_directory()::String
 
-Return the MirrorUpdater package directory.
+Return the OrganizationSnapshots package directory.
 """
 function package_directory()::String
     result::String = _find_package_directory(abspath(strip(@__FILE__)))
