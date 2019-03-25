@@ -45,7 +45,7 @@ function clean_up_branch_name(x::String)::String
             '*',
             ),
         )
-    my_regex::Regex = r"[a-zA-Z0-9_-]*\/[a-zA-Z0-9_-]*\/([a-zA-Z0-9_-]*)"
+    my_regex::Regex = r"[a-zA-Z0-9_-]*\/[a-zA-Z0-9_-]*\/([a-zA-Z0-9_\/]*)"
     if occursin(my_regex, temp)
         my_match::RegexMatch = match(my_regex, temp)
         just_the_branch::String =
@@ -61,14 +61,15 @@ clean_up_branch_name(x::AbstractString) = clean_up_branch_name(
     convert(String, x)
     )
 
-function get_all_branches_local()
+function get_all_branches_local()::Vector{String}
     git::String = _get_git_binary_path()
     a::String = read(`$(git) branch`, String)
     b::String = convert(String, strip(a))
     c::Vector{SubString{String}} = split(b, '\n')
     d::Vector{String} = clean_up_branch_name.(c)
     e::Vector{String} = sort(unique(d))
-    return e
+    f::Vector{String} = e[e .!= "HEAD"]
+    return f
 end
 
 function get_all_branches_local_and_remote()::Vector{String}
@@ -78,7 +79,8 @@ function get_all_branches_local_and_remote()::Vector{String}
     c::Vector{SubString{String}} = split(b, '\n')
     d::Vector{String} = clean_up_branch_name.(c)
     e::Vector{String} = sort(unique(d))
-    return e
+    f::Vector{String} = e[e .!= "HEAD"]
+    return f
 end
 
 function get_current_branch()::String

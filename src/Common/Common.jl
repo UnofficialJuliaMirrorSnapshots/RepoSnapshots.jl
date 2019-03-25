@@ -706,18 +706,181 @@ function _snapshot_repo!!(
         dst_provider,
         include_branches,
         exclude_branches,
+        git_user_name,
+        git_user_email,
+        time_zone::Dates.TimeZone,
         )::Nothing
-    @debug("XXX repo_name: ", repo_name,)
     original_directory = pwd()
-    src_repo_directory = mktempdir()
-    cd(src_repo_directory)
-    src_url = src_provider(:get_src_url)(
+    dst_url_with_auth = dst_provider(:_get_destination_url)(
+        ;
+        repo_name = repo_name,
+        credentials = :with_auth,
+        )
+    dst_url_with_redacted_auth = dst_provider(:_get_destination_url)(
+        ;
+        repo_name = repo_name,
+        credentials = :with_redacted_auth,
+        )
+    dst_url_without_auth = dst_provider(:_get_destination_url)(
         ;
         repo_name = repo_name,
         credentials = :without_auth,
         )
-    dst_repo_directory = mktempdir()
+    temp_initialize_dst_parent = = mktempdir()
+    temp_initialize_dst_dir = joinpath(
+        temp_initialize_dst_parent,
+        "TMP_INIT_DST_DIR",
+        )
+    cd(temp_initialize_dst_dir)
+    run(`git init`)
+    touch(".gitignore")
+    Utils.git_commit!(
+        ;
+        message = "First commit",
+        committer_name = git_user_name,
+        committer_email = git_user_email,
+        allow_empty = false,
+        )
+    run(`git remote add origin $(dst_url_with_auth)`)
+    try
+        run(`git push origin master`)
+    catch e
+        @warn("ignoring exception: ", e,)
+    end
     cd(original_directory)
+    rm(
+        temp_initialize_dst_parent;
+        force = true,
+        recursive = true,
+        )
+    dst_repo_parent = mktempdir()
+    dst_repo_dir = joinpath(dst_repo_parent, "DSTREPO",)
+    cd(dst_repo_parent)
+    dst_repo_git_clone_command = `$(git) clone $(dst_url_without_auth) DSTREPO`
+    Utils.command_ran_successfully!!(
+        dst_repo_git_clone_command;
+        )
+    cd(dst_repo_dir)
+    run(`git remote set-url origin --push $(dst_url_with_auth)`)
+
+    src_repo_parent = mktempdir()
+    src_repo_dir = joinpath(src_repo_parent, "SRCREPO",)
+    cd(src_repo_parent)
+    src_url_without_auth = src_provider(:get_src_url)(
+        ;
+        repo_name = repo_name,
+        credentials = :without_auth,
+        )
+    src_repo_git_clone_command = `$(git) clone $(src_url_without_auth) SRCREPO`
+    @info(
+        "Attempting to run command",
+        src_repo_git_clone_command,
+        pwd(),
+        ENV["PATH"],
+        )
+    when_src_cloned = Dates.now(TimeZones.localzone(),)
+    Utils.command_ran_successfully!!(
+        cmd_git_clone_repo_regular;
+        )
+    cd(src_repo_dir)
+    default_branch = Utils.get_current_branch()
+    branches_to_snapshot::Vector{String} =
+        Utils.make_list_of_branches_to_snapshot(
+            ;
+            default_branch = default_branch,
+            include = include_branches,
+            exclude = exclude_branches,
+            )
+    unique!(branches_to_snapshot)
+    sort!(branches_to_snapshot)
+    m = length(branches_to_snapshot)
+    for j = 1:m
+        temp_transition_parent = mktempdir()
+        temp_transition_dir = joinpath(
+            temp_transition_parent,
+            "TEMPTRANSITIONDIR",
+            )
+        branch::String = branches_to_snapshot[i]
+        @debug("Branch: \"$(branch)\" ($(j) of $(m))")
+        cd(src_repo_dir)
+        try
+            Utils.checkout_branch!(branch)
+        catch e
+            @warn("ignoring exception: ", e,)
+        end
+        if lowercase(strip(Utils.get_current_branch())) ==
+                lowercase(strip(branch))
+            for file_or_directory in readdir(src_repo_dir)
+                if strip(lowercase(file_or_directory)) != ".git"
+                    cp(
+                        joinpath(src_repo_dir, file_or_directory,),
+                        temp_transition_dir,
+                        )
+                end
+            end
+            cd(temp_transition_dir)
+            Utils.delete_only_dot_git!(temp_transition_dir)
+            cd(dst_repo_dir)
+            Utils.checkout_branch!(
+                branch;
+                create = true
+                )
+            if lowercase(strip(Utils.get_current_branch())) !=
+                    lowercase(strip(branch))
+                error("an error occured when trying to create branch in dst")
+            end
+            Utils.delete_everything_except_dot_git!(dst_repo_dir)
+            for file_or_directory in readdir(temp_transition_dir)
+                if strip(lowercase(temp_transition_dir)) != ".git"
+                    cp(
+                        joinpath(temp_transition_dir, file_or_directory,),
+                        dst_repo_dir,
+                        )
+                end
+            end
+            _when::String = ""
+            date_time_string::String = ""
+            if isa(when_src_cloned, TimeZones.ZonedDateTime)
+                _when = strip(
+                    string(TimeZones.astimezone(when_src_cloned,time_zone,))
+                    )
+            else
+                _when = strip(
+                    string(when_src_cloned)
+                    )
+            end
+            commit_message = string(
+                "Snapshot of branch \"\"",
+                "taken on $(_when)",
+                "from \"$(src_url_without_auth)\"",
+                )
+            Utils.git_commit!(
+                ;
+                commit_message,
+                committer_name = git_user_name,
+                committer_email = git_user_name,
+                allow_empty = false,
+                )
+        end
+        rm(
+            temp_transition_parent;
+            force = true,
+            recursive = true,
+            )
+    end
+    cd(dst_repo_parent)
+    run(`git push -u --all`)
+    cd(original_directory)
+    rm(
+        src_repo_parent;
+        force = true,
+        recursive = true,
+        )
+    rm(
+        dst_repo_parent;
+        force = true,
+        recursive = true,
+        )
     return nothing
 end
 

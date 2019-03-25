@@ -18,6 +18,8 @@ function run_organization_snapshots!!(
         ;
         src_provider,
         dst_provider,
+        git_user_name,
+        git_user_email,
         include_branches,
         exclude_branches,
         task::String = "all",
@@ -96,6 +98,9 @@ function run_organization_snapshots!!(
                 dst_provider = dst_provider,
                 include_branches = include_branches,
                 exclude_branches = exclude_branches,
+                git_user_name = git_user_name,
+                git_user_email = git_user_email,
+                time_zone = time_zone,
                 )
         end
     end

@@ -10,6 +10,7 @@ import TimeZones
 
 include(joinpath("config","preferences","branches.jl",))
 include(joinpath("config","preferences","git-hosts.jl",))
+include(joinpath("config","preferences","git-user.jl",))
 include(joinpath("config","preferences","time-zone.jl",))
 
 include(
@@ -34,6 +35,8 @@ include(
 OrganizationSnapshots.CommandLine.run_organization_snapshots_command_line!!(
     ;
     arguments = ARGS,
+    git_user_name = GIT_USER_NAME,
+    git_user_email = GIT_USER_EMAIL,
     src_provider = src_provider,
     dst_provider = dst_provider,
     include_branches = INCLUDE_BRANCHES,

@@ -18,6 +18,8 @@ import ..Run
 function run_organization_snapshots_command_line!!(
         ;
         arguments::Vector{String} = String[],
+        git_user_name,
+        git_user_email,
         src_provider,
         dst_provider,
         do_not_push_to_these_destinations::Vector{String} = String[],
@@ -47,6 +49,8 @@ function run_organization_snapshots_command_line!!(
         ;
         src_provider = src_provider,
         dst_provider = dst_provider,
+        git_user_name = git_user_name,
+        git_user_email = git_user_email,
         task = task,
         is_dry_run = is_dry_run,
         time_zone = time_zone,
