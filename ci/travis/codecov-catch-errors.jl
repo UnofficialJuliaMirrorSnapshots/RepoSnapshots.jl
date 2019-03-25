@@ -11,9 +11,9 @@ end
 
 import Coverage
 
-import MirrorUpdater
+import OrganizationSnapshots
 
-cd(MirrorUpdater.package_directory())
+cd(OrganizationSnapshots.package_directory())
 
 try
     Coverage.Codecov.submit(Coverage.Codecov.process_folder())

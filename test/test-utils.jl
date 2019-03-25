@@ -2,26 +2,26 @@
 
 Test.@testset "git tests" begin
 
-    git = MirrorUpdater.Utils._get_git_binary_path()
+    git = OrganizationSnapshots.Utils._get_git_binary_path()
     @info(string("git: "), git,)
 
     git_version_cmd = `$(git) --version`
     @info(string("Attempting to run command: "), git_version_cmd,)
     Test.@test(
-            MirrorUpdater.Utils.command_ran_successfully!!(
+            OrganizationSnapshots.Utils.command_ran_successfully!!(
                     git_version_cmd
                     )
             )
 
     Test.@test(
-            MirrorUpdater.Utils.command_ran_successfully!!(
+            OrganizationSnapshots.Utils.command_ran_successfully!!(
                     `$(git) --version`
                     )
             )
 
     Test.@test_throws(
             ErrorException,
-            MirrorUpdater.Utils.command_ran_successfully!!(
+            OrganizationSnapshots.Utils.command_ran_successfully!!(
                     `$(git) --versionBLAHBLAHBLAH`;
                     max_attempts = 5,
                     seconds_to_wait_between_attempts = 5,
@@ -32,7 +32,7 @@ Test.@testset "git tests" begin
 
     Test.@test_throws(
             ErrorException,
-            MirrorUpdater.Utils.command_ran_successfully!!(
+            OrganizationSnapshots.Utils.command_ran_successfully!!(
                     `$(git) --versionBLAHBLAHBLAH`;
                     max_attempts = 5,
                     seconds_to_wait_between_attempts = 5,
@@ -43,7 +43,7 @@ Test.@testset "git tests" begin
 
     Test.@test_throws(
             ErrorException,
-            MirrorUpdater.Utils.command_ran_successfully!!(
+            OrganizationSnapshots.Utils.command_ran_successfully!!(
                     `$(git) --versionBLAHBLAHBLAH`;
                     max_attempts = 5,
                     seconds_to_wait_between_attempts = 5,
@@ -54,7 +54,7 @@ Test.@testset "git tests" begin
 
     Test.@test(
             !(
-                    MirrorUpdater.Utils.command_ran_successfully!!(
+                    OrganizationSnapshots.Utils.command_ran_successfully!!(
                             `$(git) --versionBLAHBLAHBLAH`;
                             max_attempts = 5,
                             seconds_to_wait_between_attempts = 5,
@@ -70,7 +70,7 @@ Test.@testset "git tests" begin
 
     Test.@test(
             "Hello There" ==
-                    MirrorUpdater.Utils.retry_function_until_success(
+                    OrganizationSnapshots.Utils.retry_function_until_success(
                             () -> f_1()
                             )
             )
@@ -94,7 +94,7 @@ Test.@testset "git tests" begin
 
     Test.@test(
             "General Kenobi" ==
-                    MirrorUpdater.Utils.retry_function_until_success(
+                    OrganizationSnapshots.Utils.retry_function_until_success(
                             () -> f_2(f_2_counter);
                             max_attempts = 10,
                             seconds_to_wait_between_attempts = 5,
@@ -107,7 +107,7 @@ Test.@testset "git tests" begin
 
     Test.@test_throws(
             ErrorException,
-            MirrorUpdater.Utils.retry_function_until_success(
+            OrganizationSnapshots.Utils.retry_function_until_success(
         ()->f_3();
         max_attempts = 5,
         seconds_to_wait_between_attempts = 5,
@@ -123,8 +123,8 @@ Test.@testset "git tests" begin
     run(`$(git) init --bare`)
     cd(temp_directory_1)
     run(`$(git) init`)
-    MirrorUpdater.Utils.git_add_all!()
-    MirrorUpdater.Utils.git_commit!(
+    OrganizationSnapshots.Utils.git_add_all!()
+    OrganizationSnapshots.Utils.git_commit!(
         ;
         message="test commit 1",
         allow_empty=true,
@@ -136,47 +136,47 @@ Test.@testset "git tests" begin
     run(`git branch branch3`)
     run(`git checkout master`)
     Test.@test(
-        typeof(MirrorUpdater.Utils.git_version()) <: VersionNumber
+        typeof(OrganizationSnapshots.Utils.git_version()) <: VersionNumber
         )
     Test.@test(
-        typeof(MirrorUpdater.Utils.get_all_branches_local()) <:
+        typeof(OrganizationSnapshots.Utils.get_all_branches_local()) <:
             Vector{String}
         )
     Test.@test(
-        typeof(MirrorUpdater.Utils.get_all_branches_local_and_remote()) <:
+        typeof(OrganizationSnapshots.Utils.get_all_branches_local_and_remote()) <:
             Vector{String}
         )
     Test.@test(
-        typeof(MirrorUpdater.Utils.get_current_branch()) <: String )
+        typeof(OrganizationSnapshots.Utils.get_current_branch()) <: String )
     Test.@test(
-        MirrorUpdater.Utils.branch_exists("branch1") )
+        OrganizationSnapshots.Utils.branch_exists("branch1") )
     Test.@test(
-        !MirrorUpdater.Utils.branch_exists("non-existent-branch") )
+        !OrganizationSnapshots.Utils.branch_exists("non-existent-branch") )
     Test.@test(
-        !MirrorUpdater.Utils.branch_exists("non-existent-but-create-me") )
+        !OrganizationSnapshots.Utils.branch_exists("non-existent-but-create-me") )
     Test.@test(
-        typeof(MirrorUpdater.Utils.checkout_branch!("branch1")) <: Nothing )
+        typeof(OrganizationSnapshots.Utils.checkout_branch!("branch1")) <: Nothing )
     Test.@test_throws(
         ErrorException,
-        MirrorUpdater.Utils.checkout_branch!("non-existent-branch"),
+        OrganizationSnapshots.Utils.checkout_branch!("non-existent-branch"),
         )
     Test.@test_warn(
         "",
-        MirrorUpdater.Utils.checkout_branch!(
+        OrganizationSnapshots.Utils.checkout_branch!(
             "non-existent-branch";
             error_on_failure=false,
             ),
         )
     Test.@test(
         typeof(
-            MirrorUpdater.Utils.checkout_branch!(
+            OrganizationSnapshots.Utils.checkout_branch!(
                 "non-existent-but-create-me";
                 create=true,
                 )
             ) <: Nothing
         )
-    MirrorUpdater.Utils.git_add_all!()
-    MirrorUpdater.Utils.git_commit!(
+    OrganizationSnapshots.Utils.git_add_all!()
+    OrganizationSnapshots.Utils.git_commit!(
         ;
         message="test commit 2",
         allow_empty=true,
@@ -185,17 +185,17 @@ Test.@testset "git tests" begin
         )
     run(`git checkout master`)
     Test.@test(
-        MirrorUpdater.Utils.branch_exists("branch1")
+        OrganizationSnapshots.Utils.branch_exists("branch1")
         )
     Test.@test(
-        !MirrorUpdater.Utils.branch_exists("non-existent-branch")
+        !OrganizationSnapshots.Utils.branch_exists("non-existent-branch")
         )
     Test.@test(
-        MirrorUpdater.Utils.branch_exists("non-existent-but-create-me")
+        OrganizationSnapshots.Utils.branch_exists("non-existent-but-create-me")
         )
     run(`$(git) remote add origin $(temp_directory_2)`)
     Test.@test(
-        typeof(MirrorUpdater.Utils.git_push_upstream_all!()) <: Nothing
+        typeof(OrganizationSnapshots.Utils.git_push_upstream_all!()) <: Nothing
         )
     run(`git checkout master`)
     include_patterns::Vector{Regex} = Regex[
@@ -206,7 +206,7 @@ Test.@testset "git tests" begin
         r"^brANcH3$"i,
         ]
     branches_to_snapshot::Vector{String} =
-        MirrorUpdater.Utils.make_list_of_branches_to_snapshot(
+        OrganizationSnapshots.Utils.make_list_of_branches_to_snapshot(
             ;
             default_branch = "maSTeR",
             include = include_patterns,
@@ -220,8 +220,8 @@ Test.@testset "git tests" begin
     Test.@test( branches_to_snapshot[1] == "branch1" )
     Test.@test( branches_to_snapshot[2] == "master" )
     cd(previous_directory)
-    MirrorUpdater.Utils.delete_everything_except_dot_git!(temp_directory_1)
-    MirrorUpdater.Utils.delete_only_dot_git!(temp_directory_2)
+    OrganizationSnapshots.Utils.delete_everything_except_dot_git!(temp_directory_1)
+    OrganizationSnapshots.Utils.delete_only_dot_git!(temp_directory_2)
     rm(temp_directory_1; recursive=true, force=true)
     rm(temp_directory_2; recursive=true, force=true)
 

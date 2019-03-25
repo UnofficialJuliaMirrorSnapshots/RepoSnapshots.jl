@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-import MirrorUpdater
+import OrganizationSnapshots
 import Test # stdlib
 
 include("test-utils.jl")

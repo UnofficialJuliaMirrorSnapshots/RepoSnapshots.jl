@@ -7,7 +7,7 @@ set -ev
 export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=no --inline=no --project"
 echo "JULIA_FLAGS=$JULIA_FLAGS"
 
-export GITHOST="$1"
+export GIT_HOST="$1"
 export TASK="$2"
 
 export FORCE_DRY_RUN_ARGUMENT="$2"
@@ -36,7 +36,7 @@ echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
 echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
 
 julia $JULIA_FLAGS -e 'import Pkg; Pkg.resolve();'
-julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("MirrorUpdater");'
+julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("OrganizationSnapshots");'
 julia $JULIA_FLAGS run-mirror-updater.jl --delete-gists-older-than-minutes 10080 --gist-description "$GIST_DESCRIPTION" --task "$TASK" $DRY_RUN
 
 cat Project.toml
