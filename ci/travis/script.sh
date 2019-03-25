@@ -9,9 +9,11 @@ set -ev
 export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=no --inline=no --project"
 echo "JULIA_FLAGS=$JULIA_FLAGS"
 
-export TASK="$1"
+export GIT_HOST="$1"
 
-export FORCE_DRY_RUN_ARGUMENT="$2"
+export TASK="$2"
+
+export FORCE_DRY_RUN_ARGUMENT="$3"
 echo "FORCE_DRY_RUN_ARGUMENT=$FORCE_DRY_RUN_ARGUMENT"
 
 if [[ "$FORCE_DRY_RUN_ARGUMENT" == "FORCE_DRY_RUN" ]]
