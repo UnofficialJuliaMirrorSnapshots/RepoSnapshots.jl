@@ -224,6 +224,8 @@ function new_github_session(
     function _github_provider(task::Symbol)::Function
         if task == :list_all_repos
             return _list_all_repos
+        elseif task == :get_src_url
+            return _get_src_url
         else
             error("$(task) is not a valid task")
         end

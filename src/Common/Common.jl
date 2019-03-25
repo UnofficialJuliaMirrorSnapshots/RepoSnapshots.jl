@@ -704,8 +704,20 @@ function _snapshot_repo!!(
         repo_name;
         src_provider,
         dst_provider,
+        include_branches,
+        exclude_branches,
         )::Nothing
     @debug("XXX repo_name: ", repo_name,)
+    original_directory = pwd()
+    src_repo_directory = mktempdir()
+    cd(src_repo_directory)
+    src_url = src_provider(:get_src_url)(
+        ;
+        repo_name = repo_name,
+        credentials = :without_auth,
+        )
+    dst_repo_directory = mktempdir()
+    cd(original_directory)
     return nothing
 end
 

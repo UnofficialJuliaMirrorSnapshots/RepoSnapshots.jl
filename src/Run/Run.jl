@@ -18,6 +18,8 @@ function run_organization_snapshots!!(
         ;
         src_provider,
         dst_provider,
+        include_branches,
+        exclude_branches,
         task::String = "all",
         is_dry_run::Bool = false,
         do_not_push_to_these_destinations::Vector{String} =
@@ -92,101 +94,11 @@ function run_organization_snapshots!!(
                 repo_name;
                 src_provider = src_provider,
                 dst_provider = dst_provider,
+                include_branches = include_branches,
+                exclude_branches = exclude_branches,
                 )
         end
     end
-
-    # if task == "all" || Types._is_interval(task)
-    #     @info("Starting stage 2...")
-    #     if has_gist_description
-    #         correct_gist_content_stage2::String = ""
-    #         @info("looking for the correct gist")
-    #         args = Dict(
-    #             :gist_description => gist_description,
-    #             )
-    #         for p = 1:length(git_hosting_providers)
-    #             @info(
-    #                 string(
-    #                     "Git hosting provider ",
-    #                     "$(p) of $(length(git_hosting_providers))",
-    #                     ),
-    #                 )
-    #             provider = git_hosting_providers[p]
-    #             if length(correct_gist_content_stage2) == 0
-    #                 @info(
-    #                     string(
-    #                         "Searching git hosting provider $(p) ",
-    #                         "for the correct gist.",
-    #                         )
-    #                     )
-    #                 correct_gist_content_stage2 = try
-    #                     provider(:retrieve_gist)(args)
-    #                 catch exception
-    #                     @warn("Ignored exception", exception,)
-    #                     ""
-    #                 end
-    #             end
-    #         end
-    #         if length(strip(correct_gist_content_stage2)) == 0
-    #             error("I could not find the correct gist on any host")
-    #         end
-    #         all_repos_to_mirror_stage2 =
-    #             Common._string_to_src_dest_pair_list(
-    #                 correct_gist_content_stage2
-    #                 )
-    #     else
-    #         @info("no need to download any gists: I already have the list")
-    #         all_repos_to_mirror_stage2 =
-    #             all_repos_to_mirror_stage1
-    #     end
-    #     @info(
-    #         string(
-    #             "The full list has ",
-    #             "$(length(all_repos_to_mirror_stage2)) ",
-    #             "unique pairs.",
-    #             )
-    #         )
-    #     if Types._is_interval(task)
-    #         task_interval::Types.AbstractInterval =
-    #             Types._construct_interval(task)
-    #         @info(
-    #             string("Using interval for stage 2: "),
-    #             task_interval,
-    #             )
-    #         selected_repos_to_mirror_stage2 =
-    #             Common._pairs_that_fall_in_interval(
-    #                 all_repos_to_mirror_stage2,
-    #                 task_interval,
-    #                 )
-    #     else
-    #         selected_repos_to_mirror_stage2 =
-    #             all_repos_to_mirror_stage2
-    #     end
-    #     @info(
-    #         string(
-    #             "The selected subset of the list ",
-    #             "for this particular job has ",
-    #             "$(length(selected_repos_to_mirror_stage2)) ",
-    #             "unique pairs.",
-    #             )
-    #         )
-    #     Common._push_mirrors!!(
-    #         ;
-    #         src_dest_pairs = selected_repos_to_mirror_stage2,
-    #         git_hosting_providers = git_hosting_providers,
-    #         is_dry_run = is_dry_run,
-    #         do_not_try_url_list =
-    #             do_not_try_url_list,
-    #         try_but_allow_failures_url_list =
-    #             try_but_allow_failures_url_list,
-    #         do_not_push_to_these_destinations =
-    #             do_not_push_to_these_destinations,
-    #         time_zone = time_zone,
-    #         )
-    #     @info("SUCCESS: Stage 2 completed successfully.")
-    # end
-
-
 
     @info(
         string(
