@@ -286,14 +286,14 @@ function _snapshot_repo!!(
             Utils.git_add_all!()
             commit_message = string(
                 "Snapshot of branch $(branch)",
-                "taken on $(_when)",
-                "from \"$(src_url_without_auth)\"",
+                " taken on $(_when)",
+                " from \"$(src_url_without_auth)\"",
                 )
             Utils.git_commit!(
                 ;
                 message = commit_message,
                 committer_name = git_user_name,
-                committer_email = git_user_name,
+                committer_email = git_user_email,
                 allow_empty = false,
                 )
         end
@@ -303,10 +303,10 @@ function _snapshot_repo!!(
             recursive = true,
             )
     end
-    cd(dst_repo_parent)
     if is_dry_run
         @info("Skipping push, because this is a dry run.")
     else
+        cd(dst_repo_dir)
         run(`$(git) push -u --all`)
         when_pushed_to_dst = Dates.now(TimeZones.localzone(),)
         args1_gen_provider_description = Dict(
@@ -351,9 +351,9 @@ function _snapshot_repo!!(
             repo_description_provider,
             new_repo_description,
             )
-        args2_updatedstdescription = Dict(
+        args2_update_dst_description = Dict(
             :repo_name =>
-                convert(String, destination_repo_name),
+                convert(String, repo_name),
             :new_repo_description =>
                 convert(String, new_repo_description),
             )
@@ -362,10 +362,12 @@ function _snapshot_repo!!(
                 "Attempting to update ",
                 "repo description.",
                 ),
-            destination_repo_name,
+            repo_name,
             new_repo_description,
             )
-        dst_provider(:update_repo_description)(args2_updatedstdescription)
+        dst_provider(:update_repo_description)(
+            args2_update_dst_description
+            )
     end
     cd(original_directory)
     rm(
