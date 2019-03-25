@@ -206,20 +206,27 @@ function git_commit!(
         String,
         strip(committer_email),
         )
-    allow_empty_flag::String = ""
-    if allow_empty
-        allow_empty_flag = "--allow-empty"
-    else
-        allow_empty_flag = ""
-    end
     run(`$(git) config user.name "$(committer_name_stripped)"`)
     run(`$(git) config user.email "$(committer_email_stripped)"`)
     run(`$(git) config commit.gpgsign false`)
-    try
-        run(`$(git) commit $(allow_empty_flag) -m "$(message_stripped)"`)
-    catch e
-        @warn(string("ignoring exception"), e,)
+    if allow_empty
+        try
+            run(`$(git) commit --allow-empty -m "$(message_stripped)"`)
+        catch e1
+            @warn(string("ignoring exception"), e1,)
+        end
+    else
+        try
+            run(`$(git) commit -m "$(message_stripped)"`)
+        catch e2
+            @warn(string("ignoring exception"), e2,)
+        end
     end
+    # try
+    #
+    # catch e
+    #
+    # end
     return nothing
 end
 

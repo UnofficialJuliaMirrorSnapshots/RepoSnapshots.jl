@@ -1,7 +1,10 @@
 const INCLUDE_BRANCHES = Regex[
+    r"^default$"i,
     r"^dev$"i,
     r"^develop$"i,
+    r"^development$"i,
     r"^latest$"i,
+    r"^main$"i,
     r"^master$"i,
     r"^production$"i,
     r"^stable$"i,

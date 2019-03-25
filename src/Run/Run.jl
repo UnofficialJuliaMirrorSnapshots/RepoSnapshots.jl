@@ -92,16 +92,20 @@ function run_organization_snapshots!!(
             )
         if !startswith(repo_name, "Predict")
         else
-            Common._snapshot_repo!!(
-                repo_name;
-                src_provider = src_provider,
-                dst_provider = dst_provider,
-                include_branches = include_branches,
-                exclude_branches = exclude_branches,
-                git_user_name = git_user_name,
-                git_user_email = git_user_email,
-                time_zone = time_zone,
-                )
+            if repo_name in do_not_push_to_these_destinations
+            else
+                Common._snapshot_repo!!(
+                    repo_name;
+                    src_provider = src_provider,
+                    dst_provider = dst_provider,
+                    include_branches = include_branches,
+                    exclude_branches = exclude_branches,
+                    git_user_name = git_user_name,
+                    git_user_email = git_user_email,
+                    time_zone = time_zone,
+                    is_dry_run = is_dry_run,
+                    )
+            end
         end
     end
 

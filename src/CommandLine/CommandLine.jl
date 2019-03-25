@@ -22,6 +22,8 @@ function run_organization_snapshots_command_line!!(
         git_user_email,
         src_provider,
         dst_provider,
+        include_branches,
+        exclude_branches,
         do_not_push_to_these_destinations::Vector{String} = String[],
         do_not_try_url_list::Vector{String} = String[],
         try_but_allow_failures_url_list::Vector{String} =
@@ -47,6 +49,8 @@ function run_organization_snapshots_command_line!!(
     is_dry_run::Bool = processed_arguments[:is_dry_run]
     Run.run_organization_snapshots!!(
         ;
+        include_branches = include_branches,
+        exclude_branches = exclude_branches,
         src_provider = src_provider,
         dst_provider = dst_provider,
         git_user_name = git_user_name,
