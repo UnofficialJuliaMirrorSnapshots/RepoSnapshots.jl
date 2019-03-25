@@ -4,6 +4,8 @@
 
 set -ev
 
+exit 1
+
 export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=no --inline=no --project"
 echo "JULIA_FLAGS=$JULIA_FLAGS"
 
