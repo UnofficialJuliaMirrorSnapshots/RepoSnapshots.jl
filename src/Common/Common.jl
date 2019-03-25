@@ -321,7 +321,7 @@ function _snapshot_repo!!(
             time_zone = time_zone,
             )
         repo_description_provider::String = try
-            provider(
+            dst_provider(
                 :generate_new_repo_description)(
                 args1_gen_provider_description)
         catch exception
