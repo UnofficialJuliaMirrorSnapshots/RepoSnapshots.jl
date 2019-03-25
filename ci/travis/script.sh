@@ -2,8 +2,6 @@
 
 ##### Beginning of file
 
-exit 1
-
 set -ev
 
 export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=no --inline=no --project"
@@ -41,7 +39,7 @@ echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
 
 julia $JULIA_FLAGS -e 'import Pkg; Pkg.resolve();'
 julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("OrganizationSnapshots");'
-julia $JULIA_FLAGS run-mirror-updater.jl --delete-gists-older-than-minutes 10080 --gist-description "$GIST_DESCRIPTION" --task "$TASK" $DRY_RUN
+julia $JULIA_FLAGS run-snapshots.jl --task "$TASK" $DRY_RUN
 
 cat Project.toml
 cat Manifest.toml

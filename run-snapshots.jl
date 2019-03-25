@@ -33,7 +33,7 @@ include(
         )
     )
 
-OrganizationSnapshots.CommandLine.run_mirror_updater_command_line!!(
+OrganizationSnapshots.CommandLine.run_organization_snapshots_command_line!!(
     ;
     arguments = ARGS,
     src_provider = src_provider,
