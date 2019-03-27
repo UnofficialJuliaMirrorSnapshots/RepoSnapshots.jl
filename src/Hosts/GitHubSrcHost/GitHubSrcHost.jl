@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module GitHubSrcHost # Begin submodule OrganizationSnapshots.Hosts.GitHubSrcHost
+module GitHubSrcHost # Begin submodule Snapshots.Hosts.GitHubSrcHost
 
 __precompile__(true)
 
@@ -234,6 +234,6 @@ function new_github_session(
     return _github_provider
 end
 
-end # End submodule OrganizationSnapshots.Hosts.GitHubSrcHost
+end # End submodule Snapshots.Hosts.GitHubSrcHost
 
 ##### End of file

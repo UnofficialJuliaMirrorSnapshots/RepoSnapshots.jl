@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module Run # Begin submodule OrganizationSnapshots.Run
+module Run # Begin submodule Snapshots.Run
 
 __precompile__(true)
 
@@ -14,7 +14,7 @@ import ..Types
 import ..Utils
 import ..Common
 
-function run_organization_snapshots!!(
+function run_snapshots!!(
         ;
         src_provider,
         dst_provider,
@@ -33,7 +33,7 @@ function run_organization_snapshots!!(
         time_zone::Dates.TimeZone =
             Dates.TimeZone("America/New_York"),
         )::Nothing
-    @info("Running OrganizationSnapshots.Run.run_organization_snapshots!!")
+    @info("Running Snapshots.Run.run_snapshots!!")
 
     all_src_organization_repos::Vector{String} = src_provider(:list_all_repos)()
 
@@ -111,7 +111,7 @@ function run_organization_snapshots!!(
 
     @info(
         string(
-            "SUCCESS: run_organization_snapshots completed ",
+            "SUCCESS: run_snapshots completed ",
             "successfully :) Good-bye!",
             )
         )
@@ -119,6 +119,6 @@ function run_organization_snapshots!!(
     return nothing
 end
 
-end # End submodule OrganizationSnapshots.Run
+end # End submodule Snapshots.Run
 
 ##### End of file

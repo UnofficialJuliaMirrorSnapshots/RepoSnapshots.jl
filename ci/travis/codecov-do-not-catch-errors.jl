@@ -11,8 +11,8 @@ end
 
 import Coverage
 
-import OrganizationSnapshots
+import Snapshots
 
-cd(OrganizationSnapshots.package_directory())
+cd(Snapshots.package_directory())
 
 Coverage.Codecov.submit(Coverage.Codecov.process_folder())

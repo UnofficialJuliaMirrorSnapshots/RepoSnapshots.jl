@@ -10,9 +10,9 @@ echo "COMPILED_MODULES=$COMPILED_MODULES"
 export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=$COMPILED_MODULES --inline=no"
 echo "JULIA_FLAGS=$JULIA_FLAGS"
 
-julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("OrganizationSnapshots");'
-julia $JULIA_FLAGS -e 'import OrganizationSnapshots;'
-julia $JULIA_FLAGS -e 'import Pkg; Pkg.test("OrganizationSnapshots"; coverage=true);'
+julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("Snapshots");'
+julia $JULIA_FLAGS -e 'import Snapshots;'
+julia $JULIA_FLAGS -e 'import Pkg; Pkg.test("Snapshots"; coverage=true);'
 
 cat Project.toml
 cat Manifest.toml

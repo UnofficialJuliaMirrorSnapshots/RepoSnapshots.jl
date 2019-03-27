@@ -6,10 +6,10 @@ const DO_NOT_PUSH_TO_THESE_DESTINATIONS = String[
     "UnofficialJuliaMirrorBot/MirrorUpdater",
     "UnofficialJuliaMirrorBot/MirrorUpdater.jl",
     #
-    "OrganizationSnapshots",
-    "OrganizationSnapshots.jl",
-    "UnofficialJuliaMirrorSnapshots/OrganizationSnapshots",
-    "UnofficialJuliaMirrorSnapshots/OrganizationSnapshots.jl",
-    "UnofficialJuliaMirrorBot/OrganizationSnapshots",
-    "UnofficialJuliaMirrorBot/OrganizationSnapshots.jl",
+    "Snapshots",
+    "Snapshots.jl",
+    "UnofficialJuliaMirrorSnapshots/Snapshots",
+    "UnofficialJuliaMirrorSnapshots/Snapshots.jl",
+    "UnofficialJuliaMirrorBot/Snapshots",
+    "UnofficialJuliaMirrorBot/Snapshots.jl",
     ]
