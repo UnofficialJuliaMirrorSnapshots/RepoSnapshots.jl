@@ -390,7 +390,7 @@ function make_list_of_branches_to_snapshot(
             result,
             )
     else
-        @debug(
+        @warn(
             "Default branch is NOT included in the list.",
             default_branch,
             result,
