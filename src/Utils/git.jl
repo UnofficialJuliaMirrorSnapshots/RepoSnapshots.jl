@@ -378,6 +378,24 @@ function make_list_of_branches_to_snapshot(
         )
 
     result::Vector{String} = sort(unique(branches_to_snapshot_cleaned))
+    
+    @debug("List of branches to snapshot ($(length(result))):")
+    for i = 1:length(result)
+        @debug("$(i). $(result[i])")
+    end
+    if default_br_cl_lc_s in result
+        @debug(
+            "Default branch is included in the list.",
+            default_branch,
+            result,
+            )
+    else
+        @debug(
+            "Default branch is NOT included in the list.",
+            default_branch,
+            result,
+            )
+    end
 
     return result
 end
