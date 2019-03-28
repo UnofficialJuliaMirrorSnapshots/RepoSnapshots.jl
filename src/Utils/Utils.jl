@@ -8,8 +8,6 @@ include("git.jl")
 
 include("misc.jl")
 
-include("snapshot-utils.jl")
-
 end # End submodule Snapshots.Utils
 
 ##### End of file
