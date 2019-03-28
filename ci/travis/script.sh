@@ -38,7 +38,7 @@ echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
 echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
 
 julia $JULIA_FLAGS -e 'import Pkg; Pkg.resolve();'
-julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("OrganizationSnapshots");'
+julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("Snapshots");'
 julia $JULIA_FLAGS run-snapshots.jl --task "$TASK" $DRY_RUN
 
 cat Project.toml

@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module CommandLine # Begin submodule OrganizationSnapshots.CommandLine
+module CommandLine # Begin submodule Snapshots.CommandLine
 
 __precompile__(true)
 
@@ -15,7 +15,7 @@ import ..Utils
 import ..Common
 import ..Run
 
-function run_organization_snapshots_command_line!!(
+function run_snapshots_command_line!!(
         ;
         arguments::Vector{String} = String[],
         git_user_name,
@@ -33,8 +33,8 @@ function run_organization_snapshots_command_line!!(
         )::Nothing
     @info(
         string(
-            "Running OrganizationSnapshots.CommandLine.",
-            "run_organization_snapshots_command_line!!"
+            "Running Snapshots.CommandLine.",
+            "run_snapshots_command_line!!"
             )
         )
     @info("parsing command line arguments...")
@@ -47,7 +47,7 @@ function run_organization_snapshots_command_line!!(
         )
     task::String = processed_arguments[:task]
     is_dry_run::Bool = processed_arguments[:is_dry_run]
-    Run.run_organization_snapshots!!(
+    Run.run_snapshots!!(
         ;
         include_branches = include_branches,
         exclude_branches = exclude_branches,
@@ -101,6 +101,6 @@ function _process_parsed_arguments(parsed_arguments::Dict)::Dict{Symbol, Any}
     return result
 end
 
-end # End submodule OrganizationSnapshots.CommandLine
+end # End submodule Snapshots.CommandLine
 
 ##### End of file

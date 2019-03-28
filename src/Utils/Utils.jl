@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module Utils # Begin submodule OrganizationSnapshots.Utils
+module Utils # Begin submodule Snapshots.Utils
 
 __precompile__(true)
 
@@ -10,6 +10,6 @@ include("misc.jl")
 
 include("snapshot-utils.jl")
 
-end # End submodule OrganizationSnapshots.Utils
+end # End submodule Snapshots.Utils
 
 ##### End of file

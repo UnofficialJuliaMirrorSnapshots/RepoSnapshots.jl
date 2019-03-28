@@ -2,35 +2,35 @@
 
 Test.@test( Base.VERSION >= VersionNumber("1.0") )
 
-Test.@test( OrganizationSnapshots.version() > VersionNumber(0) )
+Test.@test( Snapshots.version() > VersionNumber(0) )
 
 Test.@test(
-    OrganizationSnapshots.version() ==
-        OrganizationSnapshots.version(OrganizationSnapshots)
+    Snapshots.version() ==
+        Snapshots.version(Snapshots)
     )
 
 Test.@test(
-    OrganizationSnapshots.version() ==
-        OrganizationSnapshots.version(first(methods(OrganizationSnapshots.eval)))
+    Snapshots.version() ==
+        Snapshots.version(first(methods(Snapshots.eval)))
     )
 
 Test.@test(
-    OrganizationSnapshots.version() ==
-        OrganizationSnapshots.version(OrganizationSnapshots.eval)
+    Snapshots.version() ==
+        Snapshots.version(Snapshots.eval)
     )
 
 Test.@test(
-    OrganizationSnapshots.version() ==
-        OrganizationSnapshots.version(OrganizationSnapshots.eval, (Any,))
+    Snapshots.version() ==
+        Snapshots.version(Snapshots.eval, (Any,))
     )
 
-Test.@test( OrganizationSnapshots.version(TestModuleA) == VersionNumber("1.2.3") )
+Test.@test( Snapshots.version(TestModuleA) == VersionNumber("1.2.3") )
 
-Test.@test( OrganizationSnapshots.version(TestModuleB) == VersionNumber("4.5.6") )
+Test.@test( Snapshots.version(TestModuleB) == VersionNumber("4.5.6") )
 
 Test.@test_throws(
     ErrorException,
-    OrganizationSnapshots._TomlFile(joinpath(mktempdir(),"1","2","3","4")),
+    Snapshots._TomlFile(joinpath(mktempdir(),"1","2","3","4")),
     )
 
 ##### End of file

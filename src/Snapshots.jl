@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module OrganizationSnapshots # Begin module OrganizationSnapshots
+module Snapshots # Begin module Snapshots
 
 __precompile__(true)
 
@@ -33,7 +33,7 @@ include(joinpath("Hosts", "Hosts.jl"))
 
 include(joinpath("init.jl"))
 
-end # End module OrganizationSnapshots
+end # End module Snapshots
 
 ##### Beginning of file
 

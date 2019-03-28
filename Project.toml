@@ -1,4 +1,4 @@
-name = "OrganizationSnapshots"
+name = "Snapshots"
 uuid = "44eb87bc-f37b-45e8-9f53-3bcb453a652d"
 authors = ["Dilum Aluthge <dilum@aluthge.com>"]
 version = "0.1.0-DEV"

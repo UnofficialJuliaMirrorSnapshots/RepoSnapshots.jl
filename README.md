@@ -1,1 +1,1 @@
-# OrganizationSnapshots
+# Snapshots
