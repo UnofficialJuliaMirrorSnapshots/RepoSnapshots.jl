@@ -7,8 +7,8 @@ function _get_git_binary_path()::String
     if !isfile(deps_jl_file_path)
         error(
             string(
-                "OrganizationSnapshots.jl is not properly installed. ",
-                "Please run\nPkg.build(\"OrganizationSnapshots\")",
+                "Snapshots.jl is not properly installed. ",
+                "Please run\nPkg.build(\"Snapshots\")",
                 )
             )
     end

@@ -33,7 +33,7 @@ end
 """
     package_directory()::String
 
-Return the OrganizationSnapshots package directory.
+Return the Snapshots package directory.
 """
 function package_directory()::String
     result::String = _find_package_directory(abspath(strip(@__FILE__)))

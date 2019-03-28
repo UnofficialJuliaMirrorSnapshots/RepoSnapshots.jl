@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module BitbucketDstHost # Begin submodule OrganizationSnapshots.Hosts.BitbucketDstHost
+module BitbucketDstHost # Begin submodule Snapshots.Hosts.BitbucketDstHost
 
 __precompile__(true)
 
@@ -504,6 +504,6 @@ function new_bitbucket_session(
     return _bitbucket_provider
 end
 
-end # End submodule OrganizationSnapshots.Hosts.BitbucketDstHost
+end # End submodule Snapshots.Hosts.BitbucketDstHost
 
 ##### End of file
