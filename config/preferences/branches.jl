@@ -14,4 +14,5 @@ const INCLUDE_BRANCHES = Regex[
 
 const EXCLUDE_BRANCHES = Regex[
     r"^gh-pages$"i,
+    r"^gh-pages1$"i,
     ]
