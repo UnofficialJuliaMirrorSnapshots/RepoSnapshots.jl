@@ -90,7 +90,7 @@ function run_snapshots!!(
                 "(repo $(i) of $(n))",
                 )
             )
-        if !startswith(repo_name, "Predict")
+        if false
         else
             if repo_name in do_not_push_to_these_destinations
             else

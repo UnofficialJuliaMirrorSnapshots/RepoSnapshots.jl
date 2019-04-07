@@ -479,6 +479,98 @@ function new_bitbucket_session(
         return nothing
     end
 
+    function _get_src_url(
+            ;
+            repo_name::String,
+            credentials::Symbol,
+            )::String
+        repo_name_without_org::String = _repo_name_without_org(
+            ;
+            repo = repo_name,
+            org = bitbucket_team,
+            )
+        result::String = ""
+        if credentials == :with_auth
+            result = string(
+                "https://",
+                _bitbucket_username,
+                ":",
+                _bitbucket_bot_app_password,
+                "@",
+                "github.com/",
+                bitbucket_team,
+                "/",
+                repo_name_without_org,
+                )
+        elseif credentials == :with_redacted_auth
+            result = string(
+                "https://",
+                _bitbucket_username,
+                ":",
+                "*****",
+                "@",
+                "github.com/",
+                bitbucket_team,
+                "/",
+                repo_name_without_org,
+                )
+        elseif credentials == :without_auth
+            result =string(
+                "https://",
+                "github.com/",
+                bitbucket_team,
+                "/",
+                repo_name_without_org,
+                )
+        else
+            error("$(credentials) is not a supported value for credentials")
+        end
+        return result
+    end
+
+    function _list_all_repos()::Vector{String}
+        repo_name_list = Vector{String}()
+        need_to_continue::Bool = true
+        current_page_number::Int = 1
+        pagelen::Int = 100
+        method::String = "GET"
+        url::String = ""
+        while need_to_continue
+            url = string(
+                "https://",
+                "$(_bitbucket_username)",
+                ":",
+                "$(_bitbucket_bot_app_password)",
+                "@api.bitbucket.org",
+                "/2.0",
+                "/repositories",
+                "/$(_bitbucket_team)",
+                "?",
+                "page=$(current_page_number)&",
+                "pagelen=$(pagelen)&",
+                )
+            r = HTTP.request(
+                method,
+                url,
+                )
+            r_body = String(r.body)
+            parsed_body = JSON.parse(r_body)
+            parsed_body_values = parsed_body["values"]
+            if length(parsed_body_values) == 0
+                need_to_continue = false
+            else
+                need_to_continue = true
+                current_page_number += 1
+                for i = 1:length(parsed_body_values)
+                    push!(repo_name_list, parsed_body_values[i]["name"],)
+                end
+            end
+        end
+        unique!(repo_name_list)
+        sort!(repo_name_list)
+        return repo_name_list
+    end
+
     function _bitbucket_provider(task::Symbol)::Function
         if task == :create_gist
             return _create_gist
@@ -496,6 +588,10 @@ function new_bitbucket_session(
             return _update_repo_description
         elseif task == :delete_gists_older_than_minutes
             return _delete_gists_older_than_minutes
+        elseif task == :list_all_repos
+            return _list_all_repos
+        elseif task == :get_src_url
+            return _get_src_url
         else
             error("$(task) is not a valid task")
         end

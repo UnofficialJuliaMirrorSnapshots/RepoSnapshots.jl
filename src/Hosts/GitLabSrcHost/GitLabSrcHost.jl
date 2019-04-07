@@ -157,6 +157,54 @@ function new_gitlab_session(
         end
     end
 
+    function _list_all_repos()
+        @info("Loading the list of all of GitLab repos in this group")
+        # repo_dict_list::Vector{Dict} = Dict[]
+        repo_name_list::Vector{String} = String[]
+        need_to_continue::Bool = true
+        current_page_number::Int = 1
+        method::String = "GET"
+        headers::Dict{String, String} = Dict(
+            "PRIVATE-TOKEN" => gitlab_bot_personal_access_token,
+            )
+        url::String = ""
+        while need_to_continue
+            url = string(
+                "https://gitlab.com/api/v4/groups/$(_gitlab_group)/projects",
+                "?per_page=100&page=$(current_page_number)&",
+                )
+            r = HTTP.request(
+                method,
+                url,
+                headers,
+                )
+            r_body = String(r.body)
+            parsed_body = JSON.parse(r_body)
+            if length(parsed_body) == 0
+                need_to_continue = false
+            else
+                need_to_continue = true
+                current_page_number += 1
+                for i = 1:length(parsed_body)
+                    repo_dict = parsed_body[i]
+                    repo_name = repo_dict["name"]
+                    if repo_name in repo_name_list
+                        @debug(
+                            string("already have this repo"),
+                            repo_name,
+                        )
+                    else
+                        push!(repo_name_list, repo_name)
+                        # push!(repo_dict_list, repo_dict)
+                    end
+                end
+            end
+        end
+        unique!(repo_name_list)
+        sort!(repo_name_list)
+        return repo_name_list
+    end
+
     function _get_all_gists()::Vector{Dict}
         @info("Loading the list of all of my GitLab snippets")
         gist_dict_list::Vector{Dict} = Dict[]
@@ -669,6 +717,55 @@ function new_gitlab_session(
         return nothing
     end
 
+    function _get_src_url(
+            ;
+            repo_name::String,
+            credentials::Symbol,
+            )::String
+        repo_name_without_org::String = _repo_name_without_org(
+            ;
+            repo = repo_name,
+            org = _gitlab_group,
+            )
+        result::String = ""
+        if credentials == :with_auth
+            result = string(
+                "https://",
+                _gitlab_username,
+                ":",
+                _gitlab_bot_personal_access_token,
+                "@",
+                "gitlab.com/",
+                _gitlab_group,
+                "/",
+                repo_name_without_org,
+                )
+        elseif credentials == :with_redacted_auth
+            result = string(
+                "https://",
+                _gitlab_username,
+                ":",
+                "*****",
+                "@",
+                "gitlab.com/",
+                _gitlab_group,
+                "/",
+                repo_name_without_org,
+                )
+        elseif credentials == :without_auth
+            result =string(
+                "https://",
+                "gitlab.com/",
+                _gitlab_group,
+                "/",
+                repo_name_without_org,
+                )
+        else
+            error("$(credentials) is not a supported value for credentials")
+        end
+        return result
+    end
+
     function _gitlab_provider(task::Symbol)::Function
         if task == :create_gist
             return _create_gist
@@ -686,6 +783,10 @@ function new_gitlab_session(
             return _update_repo_description
         elseif task == :delete_gists_older_than_minutes
             return _delete_gists_older_than_minutes
+        elseif task == :list_all_repos
+            return _list_all_repos
+        elseif task == :get_src_url
+            return _get_src_url
         else
             error("$(task) is not a valid task")
         end

@@ -378,7 +378,7 @@ function make_list_of_branches_to_snapshot(
         )
 
     result::Vector{String} = sort(unique(branches_to_snapshot_cleaned))
-    
+
     @debug("List of branches to snapshot ($(length(result))):")
     for i = 1:length(result)
         @debug("$(i). $(result[i])")
@@ -397,6 +397,11 @@ function make_list_of_branches_to_snapshot(
             )
     end
 
+    return result
+end
+
+function git_status_success()::Bool
+    result::Bool = success(`git status`)
     return result
 end
 

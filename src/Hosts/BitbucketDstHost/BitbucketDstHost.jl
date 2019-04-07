@@ -496,6 +496,8 @@ function new_bitbucket_session(
             return _update_repo_description
         elseif task == :delete_gists_older_than_minutes
             return _delete_gists_older_than_minutes
+        elseif task == :get_destination_url
+            return _get_destination_url
         else
             error("$(task) is not a valid task")
         end
