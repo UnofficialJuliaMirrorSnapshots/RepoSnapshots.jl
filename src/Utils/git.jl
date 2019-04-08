@@ -45,7 +45,7 @@ function clean_up_branch_name(x::String)::String
             '*',
             ),
         )
-    my_regex::Regex = r"[a-zA-Z0-9_-]*\/[a-zA-Z0-9_-]*\/([a-zA-Z0-9_\/]*)"
+    my_regex::Regex = r"[a-zA-Z0-9._\-]*\/[a-zA-Z0-9._\-]*\/([a-zA-Z0-9._\-\/]*)"
     if occursin(my_regex, temp)
         my_match::RegexMatch = match(my_regex, temp)
         just_the_branch::String =
