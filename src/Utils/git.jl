@@ -5,7 +5,7 @@ import ..package_directory
 function _get_git_binary_path()::String
     deps_jl_file_path = package_directory("deps", "deps.jl")
     if !isfile(deps_jl_file_path)
-        error(
+        delayederror(
             string(
                 "Snapshots.jl is not properly installed. ",
                 "Please run\nPkg.build(\"Snapshots\")",
@@ -96,7 +96,7 @@ function get_current_branch()::String
             clean_up_branch_name(first(my_match.captures))
         return just_the_branch
     else
-        error("could not determine current branch")
+        delayederror("could not determine current branch")
     end
 end
 
@@ -146,7 +146,7 @@ function checkout_branch!(
 
     if !success
         if error_on_failure
-            error("could not checkout the specified branch")
+            delayederror("could not checkout the specified branch")
         else
             @warn("could not checkout the specified branch")
         end
@@ -378,7 +378,7 @@ function make_list_of_branches_to_snapshot(
         )
 
     result::Vector{String} = sort(unique(branches_to_snapshot_cleaned))
-    
+
     @debug("List of branches to snapshot ($(length(result))):")
     for i = 1:length(result)
         @debug("$(i). $(result[i])")
@@ -397,6 +397,16 @@ function make_list_of_branches_to_snapshot(
             )
     end
 
+    return result
+end
+
+function git_status_success()::Bool
+    result::Bool = try
+        success(`git status`)
+    catch e
+        @debug("ignoring exception: ", e,)
+        false
+    end
     return result
 end
 

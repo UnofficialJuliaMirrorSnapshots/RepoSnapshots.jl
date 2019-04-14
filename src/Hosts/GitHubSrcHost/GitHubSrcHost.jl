@@ -45,7 +45,7 @@ function new_github_session(
     _github_username::String = _get_github_username(auth)
     if lowercase(strip(_github_username)) !=
             lowercase(strip(_provided_github_bot_username))
-        error(
+        delayederror(
             string(
                 "Provided GitHub username ",
                 "(\"$(_provided_github_bot_username)\") ",
@@ -216,7 +216,7 @@ function new_github_session(
                 repo_name_without_org,
                 )
         else
-            error("$(credentials) is not a supported value for credentials")
+            delayederror("$(credentials) is not a supported value for credentials")
         end
         return result
     end
@@ -227,7 +227,7 @@ function new_github_session(
         elseif task == :get_src_url
             return _get_src_url
         else
-            error("$(task) is not a valid task")
+            delayederror("$(task) is not a valid task")
         end
     end
 

@@ -188,8 +188,15 @@ function _snapshot_repo!!(
     dst_repo_dir = joinpath(dst_repo_parent, "DSTREPO",)
     cd(dst_repo_parent)
     dst_repo_git_clone_command = `$(git) clone $(dst_url_without_auth) DSTREPO`
+    before = () -> rm(
+        # joinpath(temp_dir_repo_git_clone_mirror,"GITCLONEREPOREGULAR",);
+        dst_repo_dir;
+        force = true,
+        recursive = true,
+        )
     Utils.command_ran_successfully!!(
         dst_repo_git_clone_command;
+        before = before,
         )
     cd(dst_repo_dir)
     run(`$(git) remote set-url origin --push $(dst_url_with_auth)`)
@@ -210,171 +217,180 @@ function _snapshot_repo!!(
         ENV["PATH"],
         )
     when_src_cloned = Dates.now(TimeZones.localzone(),)
+    before = () -> rm(
+        # joinpath(temp_dir_repo_git_clone_mirror,"GITCLONEREPOREGULAR",);
+        src_repo_dir;
+        force = true,
+        recursive = true,
+        )
     Utils.command_ran_successfully!!(
         src_repo_git_clone_command;
+        before = before,
         )
+    mkpath(src_repo_dir)
     cd(src_repo_dir)
-    default_branch = Utils.get_current_branch()
-    branches_to_snapshot::Vector{String} =
-        Utils.make_list_of_branches_to_snapshot(
-            ;
-            default_branch = default_branch,
-            include = include_branches,
-            exclude = exclude_branches,
-            )
-    unique!(branches_to_snapshot)
-    sort!(branches_to_snapshot)
-    m = length(branches_to_snapshot)
-    for j = 1:m
-        temp_transition_parent = mktempdir()
-        temp_transition_dir = joinpath(
-            temp_transition_parent,
-            "TEMPTRANSITIONDIR",
-            )
-        mkpath(temp_transition_dir)
-        branch::String = branches_to_snapshot[j]
-        @debug("Branch: \"$(branch)\" ($(j) of $(m))")
-        cd(src_repo_dir)
-        try
-            Utils.checkout_branch!(branch)
-        catch e
-            @warn("ignoring exception: ", e,)
-        end
-        if lowercase(strip(Utils.get_current_branch())) ==
-                lowercase(strip(branch))
-            for file_or_directory in readdir(src_repo_dir)
-                if strip(lowercase(file_or_directory)) != ".git"
-                    cp(
-                        joinpath(src_repo_dir, file_or_directory,),
-                        joinpath(temp_transition_dir, file_or_directory,);
-                        force = false,
-                        )
-                end
-            end
-            cd(temp_transition_dir)
-            Utils.delete_only_dot_git!(temp_transition_dir)
-            cd(dst_repo_dir)
-            Utils.checkout_branch!(
-                branch;
-                create = true
+    if Utils.git_status_success()
+        default_branch = Utils.get_current_branch()
+        branches_to_snapshot::Vector{String} =
+            Utils.make_list_of_branches_to_snapshot(
+                ;
+                default_branch = default_branch,
+                include = include_branches,
+                exclude = exclude_branches,
                 )
-            if lowercase(strip(Utils.get_current_branch())) !=
-                    lowercase(strip(branch))
-                error("an error occured when trying to create branch in dst")
+        unique!(branches_to_snapshot)
+        sort!(branches_to_snapshot)
+        m = length(branches_to_snapshot)
+        for j = 1:m
+            temp_transition_parent = mktempdir()
+            temp_transition_dir = joinpath(
+                temp_transition_parent,
+                "TEMPTRANSITIONDIR",
+                )
+            mkpath(temp_transition_dir)
+            branch::String = branches_to_snapshot[j]
+            @debug("Branch: \"$(branch)\" ($(j) of $(m))")
+            cd(src_repo_dir)
+            try
+                Utils.checkout_branch!(branch)
+            catch e
+                @warn("ignoring exception: ", e,)
             end
-            Utils.delete_everything_except_dot_git!(dst_repo_dir)
-            for file_or_directory in readdir(temp_transition_dir)
-                if strip(lowercase(temp_transition_dir)) != ".git"
-                    cp(
-                        joinpath(temp_transition_dir, file_or_directory,),
-                        joinpath(dst_repo_dir, file_or_directory,);
-                        force = false,
+            if lowercase(strip(Utils.get_current_branch())) ==
+                    lowercase(strip(branch))
+                for file_or_directory in readdir(src_repo_dir)
+                    if strip(lowercase(file_or_directory)) != ".git"
+                        cp(
+                            joinpath(src_repo_dir, file_or_directory,),
+                            joinpath(temp_transition_dir, file_or_directory,);
+                            force = false,
+                            )
+                    end
+                end
+                cd(temp_transition_dir)
+                Utils.delete_only_dot_git!(temp_transition_dir)
+                cd(dst_repo_dir)
+                Utils.checkout_branch!(
+                    branch;
+                    create = true
+                    )
+                if lowercase(strip(Utils.get_current_branch())) !=
+                        lowercase(strip(branch))
+                    delayederror(
+                        "an error occured when trying to create branch in dst"
                         )
                 end
+                Utils.delete_everything_except_dot_git!(dst_repo_dir)
+                for file_or_directory in readdir(temp_transition_dir)
+                    if strip(lowercase(temp_transition_dir)) != ".git"
+                        cp(
+                            joinpath(temp_transition_dir, file_or_directory,),
+                            joinpath(dst_repo_dir, file_or_directory,);
+                            force = false,
+                            )
+                    end
+                end
+                _when::String = ""
+                date_time_string::String = ""
+                if isa(when_src_cloned, TimeZones.ZonedDateTime)
+                    _when = strip(
+                        string(TimeZones.astimezone(when_src_cloned,time_zone,))
+                        )
+                else
+                    _when = strip(
+                        string(when_src_cloned)
+                        )
+                end
+                Utils.git_add_all!()
+                commit_message = string(
+                    "Snapshot of branch $(branch)",
+                    " taken on $(_when)",
+                    " from \"$(src_url_without_auth)\"",
+                    )
+                Utils.git_commit!(
+                    ;
+                    message = commit_message,
+                    committer_name = git_user_name,
+                    committer_email = git_user_email,
+                    allow_empty = false,
+                    )
             end
-            _when::String = ""
-            date_time_string::String = ""
-            if isa(when_src_cloned, TimeZones.ZonedDateTime)
-                _when = strip(
-                    string(TimeZones.astimezone(when_src_cloned,time_zone,))
+            rm(
+                temp_transition_parent;
+                force = true,
+                recursive = true,
+                )
+        end
+        if is_dry_run
+            @info("Skipping push, because this is a dry run.")
+        else
+            cd(dst_repo_dir)
+            run(`$(git) push -u --all`)
+            when_pushed_to_dst = Dates.now(TimeZones.localzone(),)
+            args1_gen_provider_description = Dict(
+                :source_url => src_url_without_auth,
+                :when => when_pushed_to_dst,
+                :time_zone => time_zone,
+                )
+            repo_description_default::String = Utils.default_repo_description(
+                ;
+                from = src_url_without_auth,
+                when = when_pushed_to_dst,
+                time_zone = time_zone,
+                )
+            repo_description_provider::String = try
+                dst_provider(
+                    :generate_new_repo_description)(
+                    args1_gen_provider_description)
+            catch exception
+                @warn(
+                    string("ignoring exception: "),
+                    exception,
+                    )
+                ""
+            end
+            new_repo_description::String = ""
+            if length(
+                    strip(
+                        repo_description_provider
+                        )
+                    ) == 0
+                new_repo_description = strip(
+                    repo_description_default
                     )
             else
-                _when = strip(
-                    string(when_src_cloned)
-                    )
-            end
-            Utils.git_add_all!()
-            commit_message = string(
-                "Snapshot of branch $(branch)",
-                " taken on $(_when)",
-                " from \"$(src_url_without_auth)\"",
-                )
-            Utils.git_commit!(
-                ;
-                message = commit_message,
-                committer_name = git_user_name,
-                committer_email = git_user_email,
-                allow_empty = false,
-                )
-            Utils.git_add_all!()
-            Utils.git_commit!(
-                ;
-                message = "Snapshot commit",
-                committer_name = git_user_name,
-                committer_email = git_user_email,
-                allow_empty = false,
-                )
-        end
-        rm(
-            temp_transition_parent;
-            force = true,
-            recursive = true,
-            )
-    end
-    if is_dry_run
-        @info("Skipping push, because this is a dry run.")
-    else
-        cd(dst_repo_dir)
-        run(`$(git) push -u --all`)
-        when_pushed_to_dst = Dates.now(TimeZones.localzone(),)
-        args1_gen_provider_description = Dict(
-            :source_url => src_url_without_auth,
-            :when => when_pushed_to_dst,
-            :time_zone => time_zone,
-            )
-        repo_description_default::String = Utils.default_repo_description(
-            ;
-            from = src_url_without_auth,
-            when = when_pushed_to_dst,
-            time_zone = time_zone,
-            )
-        repo_description_provider::String = try
-            dst_provider(
-                :generate_new_repo_description)(
-                args1_gen_provider_description)
-        catch exception
-            @warn(
-                string("ignoring exception: "),
-                exception,
-                )
-            ""
-        end
-        new_repo_description::String = ""
-        if length(
-                strip(
+                new_repo_description = strip(
                     repo_description_provider
                     )
-                ) == 0
-            new_repo_description = strip(
-                repo_description_default
+            end
+            @debug(
+                string("Repo descriptions: "),
+                repo_description_default,
+                repo_description_provider,
+                new_repo_description,
                 )
-        else
-            new_repo_description = strip(
-                repo_description_provider
+            args2_update_dst_description = Dict(
+                :repo_name =>
+                    convert(String, repo_name),
+                :new_repo_description =>
+                    convert(String, new_repo_description),
+                )
+            @info(
+                string(
+                    "Attempting to update ",
+                    "repo description.",
+                    ),
+                repo_name,
+                new_repo_description,
+                )
+            dst_provider(:update_repo_description)(
+                args2_update_dst_description
                 )
         end
-        @debug(
-            string("Repo descriptions: "),
-            repo_description_default,
-            repo_description_provider,
-            new_repo_description,
-            )
-        args2_update_dst_description = Dict(
-            :repo_name =>
-                convert(String, repo_name),
-            :new_repo_description =>
-                convert(String, new_repo_description),
-            )
-        @info(
-            string(
-                "Attempting to update ",
-                "repo description.",
-                ),
-            repo_name,
-            new_repo_description,
-            )
-        dst_provider(:update_repo_description)(
-            args2_update_dst_description
+    else
+        @warn(
+            "not a git repository",
+            Utils.git_status_success(),
             )
     end
     cd(original_directory)

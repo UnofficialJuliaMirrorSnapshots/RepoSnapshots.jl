@@ -15,6 +15,8 @@ import ..Utils
 import ..Common
 import ..Run
 
+import ..process_delayed_error_list
+
 function run_snapshots_command_line!!(
         ;
         arguments::Vector{String} = String[],
@@ -65,6 +67,7 @@ function run_snapshots_command_line!!(
         try_but_allow_failures_url_list =
             try_but_allow_failures_url_list,
         )
+    process_delayed_error_list()
     return nothing
 end
 

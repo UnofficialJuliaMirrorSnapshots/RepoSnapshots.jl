@@ -14,6 +14,8 @@ import ..Types
 import ..Utils
 import ..Common
 
+import ..process_delayed_error_list
+
 function run_snapshots!!(
         ;
         src_provider,
@@ -64,7 +66,7 @@ function run_snapshots!!(
             )
     else
         @warn("not a valid task: ", task,)
-        error("\"$(task)\" is not a valid task")
+        delayederror("\"$(task)\" is not a valid task")
     end
 
     unique!(task_src_repos)
@@ -90,7 +92,7 @@ function run_snapshots!!(
                 "(repo $(i) of $(n))",
                 )
             )
-        if !startswith(repo_name, "Predict")
+        if false
         else
             if repo_name in do_not_push_to_these_destinations
             else
@@ -116,6 +118,7 @@ function run_snapshots!!(
             )
         )
 
+    process_delayed_error_list()
     return nothing
 end
 

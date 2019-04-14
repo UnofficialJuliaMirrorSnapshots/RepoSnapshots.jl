@@ -37,10 +37,10 @@ Test.@test( Snapshots.Utils.branch_exists("branch1") )
 Test.@test( !Snapshots.Utils.branch_exists("non-existent-branch") )
 Test.@test( !Snapshots.Utils.branch_exists("non-existent-but-create-me") )
 Test.@test( typeof(Snapshots.Utils.checkout_branch!("branch1")) <: Nothing )
-Test.@test_throws(
-    ErrorException,
-    Snapshots.Utils.checkout_branch!("non-existent-branch"),
-    )
+# Test.@test_throws(
+#     ErrorException,
+#     Snapshots.Utils.checkout_branch!("non-existent-branch"),
+#     )
 Test.@test_warn(
     "",
     Snapshots.Utils.checkout_branch!("non-existent-branch"; error_on_failure=false,),
