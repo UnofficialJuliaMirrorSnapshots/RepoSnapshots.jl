@@ -65,6 +65,7 @@ function run_snapshots_command_line!!(
         try_but_allow_failures_url_list =
             try_but_allow_failures_url_list,
         )
+    process_delayed_error_list()
     return nothing
 end
 
