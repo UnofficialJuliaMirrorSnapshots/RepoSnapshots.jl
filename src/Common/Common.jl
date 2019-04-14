@@ -188,8 +188,15 @@ function _snapshot_repo!!(
     dst_repo_dir = joinpath(dst_repo_parent, "DSTREPO",)
     cd(dst_repo_parent)
     dst_repo_git_clone_command = `$(git) clone $(dst_url_without_auth) DSTREPO`
+    before = () -> rm(
+        # joinpath(temp_dir_repo_git_clone_mirror,"GITCLONEREPOREGULAR",);
+        dst_repo_dir;
+        force = true,
+        recursive = true,
+        )
     Utils.command_ran_successfully!!(
         dst_repo_git_clone_command;
+        before = before,
         )
     cd(dst_repo_dir)
     run(`$(git) remote set-url origin --push $(dst_url_with_auth)`)
@@ -210,8 +217,15 @@ function _snapshot_repo!!(
         ENV["PATH"],
         )
     when_src_cloned = Dates.now(TimeZones.localzone(),)
+    before = () -> rm(
+        # joinpath(temp_dir_repo_git_clone_mirror,"GITCLONEREPOREGULAR",);
+        src_repo_dir;
+        force = true,
+        recursive = true,
+        )
     Utils.command_ran_successfully!!(
         src_repo_git_clone_command;
+        before = before,
         )
     mkpath(src_repo_dir)
     cd(src_repo_dir)
