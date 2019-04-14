@@ -64,7 +64,7 @@ function run_snapshots!!(
             )
     else
         @warn("not a valid task: ", task,)
-        error("\"$(task)\" is not a valid task")
+        delayederror("\"$(task)\" is not a valid task")
     end
 
     unique!(task_src_repos)

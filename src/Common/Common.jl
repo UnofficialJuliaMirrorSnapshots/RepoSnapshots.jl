@@ -276,7 +276,9 @@ function _snapshot_repo!!(
                     )
                 if lowercase(strip(Utils.get_current_branch())) !=
                         lowercase(strip(branch))
-                    error("an error occured when trying to create branch in dst")
+                    delayederror(
+                        "an error occured when trying to create branch in dst"
+                        )
                 end
                 Utils.delete_everything_except_dot_git!(dst_repo_dir)
                 for file_or_directory in readdir(temp_transition_dir)
