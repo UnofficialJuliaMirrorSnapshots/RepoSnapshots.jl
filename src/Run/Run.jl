@@ -116,6 +116,7 @@ function run_snapshots!!(
             )
         )
 
+    process_delayed_error_list()
     return nothing
 end
 
