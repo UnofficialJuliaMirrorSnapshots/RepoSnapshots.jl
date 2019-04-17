@@ -422,8 +422,6 @@ function new_bitbucket_session(
             return _delete_gists
         elseif task == :create_repo
             return _create_repo
-        elseif task == :push_mirrored_repo
-            return _push_mirrored_repo
         elseif task == :generate_new_repo_description
             return _generate_new_repo_description
         elseif task == :update_repo_description
