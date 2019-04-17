@@ -11,6 +11,8 @@ import Dates
 import GitHub
 import TimeZones
 
+import ..delayederror
+
 function new_github_session(
         ;
         github_organization::AbstractString,
