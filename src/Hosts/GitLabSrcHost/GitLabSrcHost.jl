@@ -12,6 +12,8 @@ import HTTP
 import JSON
 import TimeZones
 
+import ..delayederror
+
 function new_gitlab_session(
         ;
         gitlab_group::String,
