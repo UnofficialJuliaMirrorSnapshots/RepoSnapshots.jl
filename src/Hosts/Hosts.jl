@@ -7,6 +7,8 @@ __precompile__(true)
 import ..Types
 import ..Utils
 
+import ..delayederror
+
 include(joinpath("BitbucketSrcHost", "BitbucketSrcHost.jl"))
 include(joinpath("BitbucketDstHost", "BitbucketDstHost.jl"))
 
