@@ -648,7 +648,7 @@ function new_gitlab_session(
         repo_name_without_org::String = _repo_name_without_org(
             ;
             repo = repo_name,
-            org = _github_group,
+            org = _gitlab_group,
             )
         result::String = ""
         if credentials == :with_auth
@@ -659,7 +659,7 @@ function new_gitlab_session(
                 _gitlab_bot_personal_access_token,
                 "@",
                 "gitlab.com/",
-                _github_group,
+                _gitlab_group,
                 "/",
                 repo_name_without_org,
                 )
@@ -671,7 +671,7 @@ function new_gitlab_session(
                 "*****",
                 "@",
                 "gitlab.com/",
-                _github_group,
+                _gitlab_group,
                 "/",
                 repo_name_without_org,
                 )
@@ -679,7 +679,7 @@ function new_gitlab_session(
             result =string(
                 "https://",
                 "gitlab.com/",
-                _github_group,
+                _gitlab_group,
                 "/",
                 repo_name_without_org,
                 )
