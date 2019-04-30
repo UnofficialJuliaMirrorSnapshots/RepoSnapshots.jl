@@ -413,21 +413,118 @@ function new_bitbucket_session(
         return nothing
     end
 
+    function _list_all_repos()::Vector{String}
+        @info("Loading the list of all of repos in my team")
+        repo_name_list = String[]
+        need_to_continue = true
+        current_page_number = 1
+        method = "GET"
+        headers = Dict(
+            "content-type" => "application/json",
+            )
+        username = _bitbucket_username
+        password = _bitbucket_bot_app_password
+        url = string(
+            "https://",
+            "$(username)",
+            ":",
+            "$(password)",
+            "@api.bitbucket.org",
+            "/2.0",
+            "/repositories",
+            "/$(_bitbucket_team)",
+            )
+        while need_to_continue
+            params = Dict(
+                )
+            body = JSON.json(params)
+            r = HTTP.request(
+                method,
+                url,
+                headers,
+                body;
+                basic_authorization = true,
+                )
+            r_body = String(r.body)
+            parsed_body = JSON.parse(r_body)
+            if haskey(parsed_body, "next",)
+                need_to_continue = true
+                @debug("Next URL: ", parsed_body["next"],)
+                url = replace(
+                    parsed_body["next"],
+                    "https://" => "https://$(username):$(password)@",
+                    )
+            else
+                need_to_continue = false
+            end
+            parsed_body_values = parsed_body["values"]
+            for i = 1:length(parsed_body_values)
+                repo_name = parsed_body_values[i]["name"]
+                if !(repo_name in repo_name_list)
+                    push!(repo_name_list, repo_name,)
+                end
+            end
+        end
+        sort!(repo_name_list)
+        unique!(repo_name_list)
+        sort!(repo_name_list)
+        return repo_name_list
+    end
+
+    function _get_src_url(
+            ;
+            repo_name::String,
+            credentials::Symbol,
+            )::String
+        repo_name_without_org::String = _repo_name_without_org(
+            ;
+            repo = repo_name,
+            org = _bitbucket_team,
+            )
+        result::String = ""
+        if credentials == :with_auth
+            result = string(
+                "https://",
+                _bitbucket_username,
+                ":",
+                _bitbucket_bot_app_password,
+                "@",
+                "bitbucket.org/",
+                _bitbucket_team,
+                "/",
+                repo_name_without_org,
+                )
+        elseif credentials == :with_redacted_auth
+            result = string(
+                "https://",
+                _bitbucket_username,
+                ":",
+                "*****",
+                "@",
+                "bitbucket.org/",
+                _bitbucket_team,
+                "/",
+                repo_name_without_org,
+                )
+        elseif credentials == :without_auth
+            result =string(
+                "https://",
+                "bitbucket.org/",
+                _bitbucket_team,
+                "/",
+                repo_name_without_org,
+                )
+        else
+            delayederror("$(credentials) is not a supported value for credentials")
+        end
+        return result
+    end
+
     function _bitbucket_provider(task::Symbol)::Function
-        if task == :create_gist
-            return _create_gist
-        elseif task == :retrieve_gist
-            return _retrieve_gist
-        elseif task == :delete_gists
-            return _delete_gists
-        elseif task == :create_repo
-            return _create_repo
-        elseif task == :generate_new_repo_description
-            return _generate_new_repo_description
-        elseif task == :update_repo_description
-            return _update_repo_description
-        elseif task == :delete_gists_older_than_minutes
-            return _delete_gists_older_than_minutes
+        if task == :list_all_repos
+            return _list_all_repos
+        elseif task == :get_src_url
+            return _get_src_url
         else
             delayederror("$(task) is not a valid task")
         end
