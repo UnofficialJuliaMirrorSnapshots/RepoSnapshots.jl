@@ -1,5 +1,6 @@
 ##### Beginning of file
 
+import ..delayederror
 import ..package_directory
 
 function _get_git_binary_path()::String

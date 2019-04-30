@@ -12,6 +12,8 @@ import HTTP
 import JSON
 import TimeZones
 
+import ..delayederror
+
 function new_gitlab_session(
         ;
         gitlab_group::String,
@@ -505,85 +507,6 @@ function new_gitlab_session(
         return nothing
     end
 
-    function _push_mirrored_repo(params::AbstractDict)::Nothing
-        repo_name::String = params[:repo_name]
-        repo_directory::String = params[:directory]
-        git_path::String = params[:git]
-        try_but_allow_failures_url_list =
-            params[:try_but_allow_failures_url_list]
-        repo_name_without_org = _repo_name_without_org(
-            ;
-            repo = repo_name,
-            org = _gitlab_group,
-            )
-        repo_dest_url_without_auth = _get_destination_url(
-            ;
-            repo_name = repo_name_without_org,
-            credentials = :without_auth,
-            )
-        repo_dest_url_with_auth = _get_destination_url(
-            ;
-            repo_name = repo_name_without_org,
-            credentials = :with_auth,
-            )
-        repo_dest_url_with_redacted_auth = _get_destination_url(
-            ;
-            repo_name = repo_name_without_org,
-            credentials = :with_redacted_auth,
-            )
-        previous_directory = pwd()
-        cd(repo_directory)
-        mirrorpush_cmd_withauth =
-            `$(git_path) push --mirror $(repo_dest_url_with_auth)`
-        mirrorpush_cmd_withredactedauth =
-            `$(git_path) push --mirror $(repo_dest_url_with_redacted_auth)`
-        @info(
-            string("Attempting to push repo to GitLab..."),
-            mirrorpush_cmd_withredactedauth,
-            pwd(),
-            ENV["PATH"],
-            )
-        try
-            Utils.command_ran_successfully!!(
-                mirrorpush_cmd_withauth;
-                error_on_failure = true,
-                last_resort_run = true,
-                )
-            @info(
-                string("Successfully pushed repo to GitLab."),
-                mirrorpush_cmd_withredactedauth,
-                pwd(),
-                ENV["PATH"],
-                )
-        catch exception
-            @warn("caught exception: ", exception)
-            if repo_dest_url_without_auth in try_but_allow_failures_url_list
-                @warn(
-                    string(
-                        "repo_dest_url_without_auth is in the ",
-                        "try_but_allow_failures_url_list, so ignoring ",
-                        "exception.",
-                        ),
-                    repo_dest_url_without_auth,
-                    exception,
-                    )
-            else
-                @warn(
-                    string(
-                        "The push to GitLab failed. Normally, I would throw ",
-                        "an error. But GitLab will randomly reject some refs.",
-                        "So I'll assume that's what's going on here.",
-                        "And I will ignore the error.",
-                        ),
-                    repo_dest_url_without_auth,
-                    exception,
-                    )
-            end
-        end
-        cd(previous_directory)
-        return nothing
-    end
-
     function _generate_new_repo_description(
             params::AbstractDict,
             )::String
@@ -677,8 +600,6 @@ function new_gitlab_session(
             return _delete_gists
         elseif task == :create_repo
             return _create_repo
-        elseif task == :push_mirrored_repo
-            return _push_mirrored_repo
         elseif task == :generate_new_repo_description
             return _generate_new_repo_description
         elseif task == :update_repo_description

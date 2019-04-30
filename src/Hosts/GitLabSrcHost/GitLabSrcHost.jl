@@ -12,6 +12,8 @@ import HTTP
 import JSON
 import TimeZones
 
+import ..delayederror
+
 function new_gitlab_session(
         ;
         gitlab_group::String,
@@ -505,85 +507,6 @@ function new_gitlab_session(
         return nothing
     end
 
-    function _push_mirrored_repo(params::AbstractDict)::Nothing
-        repo_name::String = params[:repo_name]
-        repo_directory::String = params[:directory]
-        git_path::String = params[:git]
-        try_but_allow_failures_url_list =
-            params[:try_but_allow_failures_url_list]
-        repo_name_without_org = _repo_name_without_org(
-            ;
-            repo = repo_name,
-            org = _gitlab_group,
-            )
-        repo_dest_url_without_auth = _get_destination_url(
-            ;
-            repo_name = repo_name_without_org,
-            credentials = :without_auth,
-            )
-        repo_dest_url_with_auth = _get_destination_url(
-            ;
-            repo_name = repo_name_without_org,
-            credentials = :with_auth,
-            )
-        repo_dest_url_with_redacted_auth = _get_destination_url(
-            ;
-            repo_name = repo_name_without_org,
-            credentials = :with_redacted_auth,
-            )
-        previous_directory = pwd()
-        cd(repo_directory)
-        mirrorpush_cmd_withauth =
-            `$(git_path) push --mirror $(repo_dest_url_with_auth)`
-        mirrorpush_cmd_withredactedauth =
-            `$(git_path) push --mirror $(repo_dest_url_with_redacted_auth)`
-        @info(
-            string("Attempting to push repo to GitLab..."),
-            mirrorpush_cmd_withredactedauth,
-            pwd(),
-            ENV["PATH"],
-            )
-        try
-            Utils.command_ran_successfully!!(
-                mirrorpush_cmd_withauth;
-                error_on_failure = true,
-                last_resort_run = true,
-                )
-            @info(
-                string("Successfully pushed repo to GitLab."),
-                mirrorpush_cmd_withredactedauth,
-                pwd(),
-                ENV["PATH"],
-                )
-        catch exception
-            @warn("caught exception: ", exception)
-            if repo_dest_url_without_auth in try_but_allow_failures_url_list
-                @warn(
-                    string(
-                        "repo_dest_url_without_auth is in the ",
-                        "try_but_allow_failures_url_list, so ignoring ",
-                        "exception.",
-                        ),
-                    repo_dest_url_without_auth,
-                    exception,
-                    )
-            else
-                @warn(
-                    string(
-                        "The push to GitLab failed. Normally, I would throw ",
-                        "an error. But GitLab will randomly reject some refs.",
-                        "So I'll assume that's what's going on here.",
-                        "And I will ignore the error.",
-                        ),
-                    repo_dest_url_without_auth,
-                    exception,
-                    )
-            end
-        end
-        cd(previous_directory)
-        return nothing
-    end
-
     function _generate_new_repo_description(
             params::AbstractDict,
             )::String
@@ -668,23 +591,109 @@ function new_gitlab_session(
         return nothing
     end
 
+    function _list_all_repos()::Vector{String}
+        @info("Loading the list of all of repos in my group")
+        repo_name_list::Vector{String} = String[]
+        need_to_continue = true
+        current_page_number = 1
+        method = "GET"
+        my_group_id = _get_namespace_id_for_my_group()
+        headers = Dict(
+            "PRIVATE-TOKEN" => gitlab_bot_personal_access_token,
+            )
+        url = ""
+        while need_to_continue
+            @debug("current_page_number: ", current_page_number,)
+            url = string(
+                "https://gitlab.com/api/v4/groups/$(my_group_id)/projects",
+                "?per_page=100&page=$(current_page_number)&",
+                )
+            r = HTTP.request(
+                method,
+                url,
+                headers,
+                )
+            r_body = String(r.body)
+            parsed_body = JSON.parse(r_body)
+            if length(parsed_body) == 0
+                need_to_continue = false
+            else
+                need_to_continue = true
+                current_page_number += 1
+                for i = 1:length(parsed_body)
+                    repo_dict = parsed_body[i]
+                    repo_name = repo_dict["name"]
+                    if repo_name in repo_name_list
+                        @debug(
+                            string("already have this repo"),
+                            repo_name,
+                        )
+                    else
+                        push!(repo_name_list, repo_name)
+                    end
+                end
+            end
+        end
+        sort!(repo_name_list)
+        unique!(repo_name_list)
+        sort!(repo_name_list)
+        return repo_name_list
+    end
+
+    function _get_src_url(
+            ;
+            repo_name::String,
+            credentials::Symbol,
+            )::String
+        repo_name_without_org::String = _repo_name_without_org(
+            ;
+            repo = repo_name,
+            org = _gitlab_group,
+            )
+        result::String = ""
+        if credentials == :with_auth
+            result = string(
+                "https://",
+                _gitlab_username,
+                ":",
+                _gitlab_bot_personal_access_token,
+                "@",
+                "gitlab.com/",
+                _gitlab_group,
+                "/",
+                repo_name_without_org,
+                )
+        elseif credentials == :with_redacted_auth
+            result = string(
+                "https://",
+                _gitlab_username,
+                ":",
+                "*****",
+                "@",
+                "gitlab.com/",
+                _gitlab_group,
+                "/",
+                repo_name_without_org,
+                )
+        elseif credentials == :without_auth
+            result =string(
+                "https://",
+                "gitlab.com/",
+                _gitlab_group,
+                "/",
+                repo_name_without_org,
+                )
+        else
+            delayederror("$(credentials) is not a supported value for credentials")
+        end
+        return result
+    end
+
     function _gitlab_provider(task::Symbol)::Function
-        if task == :create_gist
-            return _create_gist
-        elseif task == :retrieve_gist
-            return _retrieve_gist
-        elseif task == :delete_gists
-            return _delete_gists
-        elseif task == :create_repo
-            return _create_repo
-        elseif task == :push_mirrored_repo
-            return _push_mirrored_repo
-        elseif task == :generate_new_repo_description
-            return _generate_new_repo_description
-        elseif task == :update_repo_description
-            return _update_repo_description
-        elseif task == :delete_gists_older_than_minutes
-            return _delete_gists_older_than_minutes
+        if task == :list_all_repos
+            return _list_all_repos
+        elseif task == :get_src_url
+            return _get_src_url
         else
             delayederror("$(task) is not a valid task")
         end

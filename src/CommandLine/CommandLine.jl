@@ -15,6 +15,7 @@ import ..Utils
 import ..Common
 import ..Run
 
+import ..delayederror
 import ..process_delayed_error_list
 
 function run_snapshots_command_line!!(

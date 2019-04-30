@@ -4,6 +4,8 @@ import Dates
 import HTTP
 import TimeZones
 
+import ..delayederror
+
 function default_repo_description(
         ;
         env::AbstractDict = ENV,
