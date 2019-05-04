@@ -14,24 +14,24 @@ git:
   depth: 99999999
 jobs:
   include:
-    # -
-    #   name: runtests-compiled-modules-no
-    #   script: "./ci/travis/runtests.sh \"no\""
-    # -
-    #   name: runtests-compiled-modules-yes
-    #   script: "./ci/travis/runtests.sh \"yes\""
-    # -
-    #   name: "dry run [,B) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[,B)\" \"FORCE_DRY_RUN\""
+    -
+      name: runtests-compiled-modules-no
+      script: "./ci/travis/runtests.sh \"no\""
+    -
+      name: runtests-compiled-modules-yes
+      script: "./ci/travis/runtests.sh \"yes\""
+    -
+      name: "dry run [,B) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[,B)\" \"FORCE_DRY_RUN\""
     -
       name: "[,B) GitHub"
       script: "./ci/travis/script.sh \"GITHUB\" \"[,B)\""
-    # -
-    #   name: "[B,C) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[B,C)\""
-    # -
-    #   name: "[C,D) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[C,D)\""
+    -
+      name: "[B,C) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[B,C)\""
+    -
+      name: "[C,D) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[C,D)\""
     # -
     #   name: "[D,Dn) GitHub"
     #   script: "./ci/travis/script.sh \"GITHUB\" \"[D,Dn)\""
@@ -137,18 +137,18 @@ jobs:
     # -
     #   name: "[t,) GitHub"
     #   script: "./ci/travis/script.sh \"GITHUB\" \"[t,)\""
-    # -
-    #   name: "dry run [,B) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[,B)\" \"FORCE_DRY_RUN\""
+    -
+      name: "dry run [,B) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[,B)\" \"FORCE_DRY_RUN\""
     -
       name: "[,B) GitLab"
       script: "./ci/travis/script.sh \"GITLAB\" \"[,B)\""
-    # -
-    #   name: "[B,C) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[B,C)\""
-    # -
-    #   name: "[C,D) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[C,D)\""
+    -
+      name: "[B,C) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[B,C)\""
+    -
+      name: "[C,D) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[C,D)\""
     # -
     #   name: "[D,Dn) GitLab"
     #   script: "./ci/travis/script.sh \"GITLAB\" \"[D,Dn)\""
@@ -254,18 +254,18 @@ jobs:
     # -
     #   name: "[t,) GitLab"
     #   script: "./ci/travis/script.sh \"GITLAB\" \"[t,)\""
-    # -
-    #   name: "dry run [,b) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[,b)\" \"FORCE_DRY_RUN\""
+    -
+      name: "dry run [,b) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[,b)\" \"FORCE_DRY_RUN\""
     -
       name: "[,b) Bitbucket"
       script: "./ci/travis/script.sh \"BITBUCKET\" \"[,b)\""
-    # -
-    #   name: "[b,c) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[b,c)\""
-    # -
-    #   name: "[c,d) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[c,d)\""
+    -
+      name: "[b,c) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[b,c)\""
+    -
+      name: "[c,d) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[c,d)\""
     # -
     #   name: "[d,dn) Bitbucket"
     #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[d,dn)\""
@@ -353,12 +353,12 @@ jobs:
     # -
     #   name: "[x,y) Bitbucket"
     #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[x,y)\""
-    # -
-    #   name: "[y,z) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[y,z)\""
-    # -
-    #   name: "[z,) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[z,)\""
+    -
+      name: "[y,z) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[y,z)\""
+    -
+      name: "[z,) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[z,)\""
 
 julia:
   - "1.1"
