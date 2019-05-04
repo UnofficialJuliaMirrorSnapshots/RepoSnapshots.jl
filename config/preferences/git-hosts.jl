@@ -47,17 +47,21 @@ elseif GIT_HOST == "gitlab"
                 GITLAB_BOT_PERSONAL_ACCESS_TOKEN,
             )
 elseif GIT_HOST == "bitbucket"
-    const BITBUCKET_SRC_TEAM = "UnofficialJuliaMirror"
+    const GITHUB_SRC_ORGANIZATION = "UnofficialJuliaMirror"
+    const GITHUB_BOT_USERNAME = "UnofficialJuliaMirrorBot"
+    const GITHUB_BOT_PERSONAL_ACCESS_TOKEN =
+        ENV["GITHUB_BOT_PERSONAL_ACCESS_TOKEN"]
     const BITBUCKET_DST_TEAM = "UnofficialJuliaMirrorSnapshots"
     const BITBUCKET_BOT_USERNAME = "UnofficialJuliaMirrorBot"
     const BITBUCKET_BOT_APP_PASSWORD =
         ENV["BITBUCKET_BOT_APP_PASSWORD"]
     const src_provider =
-        Snapshots.Hosts.BitbucketSrcHost.new_bitbucket_session(
+        Snapshots.Hosts.GitHubSrcHost.new_github_session(
             ;
-            bitbucket_team = BITBUCKET_SRC_TEAM,
-            bitbucket_bot_username = BITBUCKET_BOT_USERNAME,
-            bitbucket_bot_app_password = BITBUCKET_BOT_APP_PASSWORD,
+            github_organization = GITHUB_SRC_ORGANIZATION,
+            github_bot_username = GITHUB_BOT_USERNAME,
+            github_bot_personal_access_token =
+                GITHUB_BOT_PERSONAL_ACCESS_TOKEN,
             )
     const dst_provider =
         Snapshots.Hosts.BitbucketDstHost.new_bitbucket_session(
