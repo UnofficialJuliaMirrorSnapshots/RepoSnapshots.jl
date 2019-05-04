@@ -7,7 +7,7 @@ set -ev
 export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=no --inline=no --project"
 echo "JULIA_FLAGS=$JULIA_FLAGS"
 
-export GIT_HOST="$1"
+export GIT_DESTINATION_HOST="$1"
 
 export TASK="$2"
 
@@ -52,7 +52,7 @@ else
 fi
 
 echo "DRY_RUN=$DRY_RUN"
-echo "GIT_HOST=$GIT_HOST"
+echo "GIT_DESTINATION_HOST=$GIT_DESTINATION_HOST"
 echo "TASK=$TASK"
 echo "TRAVIS_BRANCH=$TRAVIS_BRANCH"
 echo "TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST"
