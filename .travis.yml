@@ -14,24 +14,24 @@ git:
   depth: 99999999
 jobs:
   include:
-    # -
-    #   name: runtests-compiled-modules-no
-    #   script: "./ci/travis/runtests.sh \"no\""
-    # -
-    #   name: runtests-compiled-modules-yes
-    #   script: "./ci/travis/runtests.sh \"yes\""
-    # -
-    #   name: "dry run [,B) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[,B)\" \"FORCE_DRY_RUN\""
+    -
+      name: runtests-compiled-modules-no
+      script: "./ci/travis/runtests.sh \"no\""
+    -
+      name: runtests-compiled-modules-yes
+      script: "./ci/travis/runtests.sh \"yes\""
+    -
+      name: "dry run [,B) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[,B)\" \"FORCE_DRY_RUN\""
     -
       name: "[,B) GitHub"
       script: "./ci/travis/script.sh \"GITHUB\" \"[,B)\""
-    # -
-    #   name: "[B,C) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[B,C)\""
-    # -
-    #   name: "[C,D) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[C,D)\""
+    -
+      name: "[B,C) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[B,C)\""
+    -
+      name: "[C,D) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[C,D)\""
     # -
     #   name: "[D,Dn) GitHub"
     #   script: "./ci/travis/script.sh \"GITHUB\" \"[D,Dn)\""
@@ -137,18 +137,18 @@ jobs:
     # -
     #   name: "[t,) GitHub"
     #   script: "./ci/travis/script.sh \"GITHUB\" \"[t,)\""
-    # -
-    #   name: "dry run [,B) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[,B)\" \"FORCE_DRY_RUN\""
+    -
+      name: "dry run [,B) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[,B)\" \"FORCE_DRY_RUN\""
     -
       name: "[,B) GitLab"
       script: "./ci/travis/script.sh \"GITLAB\" \"[,B)\""
-    # -
-    #   name: "[B,C) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[B,C)\""
-    # -
-    #   name: "[C,D) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[C,D)\""
+    -
+      name: "[B,C) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[B,C)\""
+    -
+      name: "[C,D) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[C,D)\""
     # -
     #   name: "[D,Dn) GitLab"
     #   script: "./ci/travis/script.sh \"GITLAB\" \"[D,Dn)\""
@@ -254,111 +254,123 @@ jobs:
     # -
     #   name: "[t,) GitLab"
     #   script: "./ci/travis/script.sh \"GITLAB\" \"[t,)\""
-    # -
-    #   name: "dry run [,b) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[,b)\" \"FORCE_DRY_RUN\""
     -
-      name: "[,b) Bitbucket"
-      script: "./ci/travis/script.sh \"BITBUCKET\" \"[,b)\""
+      name: "dry run [,B) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[,B)\" \"FORCE_DRY_RUN\""
+    -
+      name: "[,B) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[,B)\""
+    -
+      name: "[B,C) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[B,C)\""
+    -
+      name: "[C,D) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[C,D)\""
     # -
-    #   name: "[b,c) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[b,c)\""
+    #   name: "[D,Dn) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[D,Dn)\""
     # -
-    #   name: "[c,d) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[c,d)\""
+    #   name: "[Dn,E) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Dn,E)\""
     # -
-    #   name: "[d,dn) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[d,dn)\""
+    #   name: "[E,F) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[E,F)\""
     # -
-    #   name: "[) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[dn,e)\""
+    #   name: "[F,G) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[F,G)\""
     # -
-    #   name: "[e,f) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[e,f)\""
+    #   name: "[G,H) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[G,H)\""
     # -
-    #   name: "[f,g) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[f,g)\""
+    #   name: "[H,I) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[H,I)\""
     # -
-    #   name: "[g,h) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[g,h)\""
+    #   name: "[I,J) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[I,J)\""
     # -
-    #   name: "[h,i) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[h,i)\""
+    #   name: "[J,Ji) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[J,Ji)\""
     # -
-    #   name: "[i,j) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[i,j)\""
+    #   name: "[Ji,Jt) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Ji,Jt)\""
     # -
-    #   name: "[j,ji) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[j,ji)\""
+    #   name: "[Jt,K) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Jt,K)\""
     # -
-    #   name: "[ji,jt) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[ji,jt)\""
+    #   name: "[K,L) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[K,L)\""
     # -
-    #   name: "[jt,k) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[jt,k)\""
+    #   name: "[L,M) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[L,M)\""
     # -
-    #   name: "[k,l) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[k,l)\""
+    #   name: "[M,Mn) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[M,Mn)\""
     # -
-    #   name: "[l,m) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[l,m)\""
+    #   name: "[Mn,N) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Mn,N)\""
     # -
-    #   name: "[m,mn) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[m,mn)\""
+    #   name: "[N,O) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[N,O)\""
     # -
-    #   name: "[mn,n) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[mn,n)\""
+    #   name: "[O,P) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[O,P)\""
     # -
-    #   name: "[n,o) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[n,o)\""
+    #   name: "[P,Pn) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[P,Pn)\""
     # -
-    #   name: "[o,p) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[o,p)\""
+    #   name: "[Pn,Q) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Pn,Q)\""
     # -
-    #   name: "[p,pn) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[p,pn)\""
+    #   name: "[Q,R) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Q,R)\""
     # -
-    #   name: "[pn,q) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[pn,q)\""
+    #   name: "[R,S) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[R,S)\""
     # -
-    #   name: "[q,r) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[q,r)\""
+    #   name: "[S,Si) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[S,Si)\""
     # -
-    #   name: "[r,s) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[r,s)\""
+    #   name: "[Si,Sq) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Si,Sq)\""
     # -
-    #   name: "[s,si) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[s,si)\""
+    #   name: "[Sq,Sx) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Sq,Sx)\""
     # -
-    #   name: "[si,sq) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[si,sq)\""
+    #   name: "[Sx,T) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Sx,T)\""
     # -
-    #   name: "[sq,sx) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[sq,sx)\""
+    #   name: "[T,U) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[T,U)\""
     # -
-    #   name: "[sx,t) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[sx,t)\""
+    #   name: "[U,V) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[U,V)\""
     # -
-    #   name: "[t,u) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[t,u)\""
+    #   name: "[V,W) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[V,W)\""
     # -
-    #   name: "[u,v) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[u,v)\""
+    #   name: "[W,X) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[W,X)\""
     # -
-    #   name: "[v,w) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[v,w)\""
+    #   name: "[X,Y) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[X,Y)\""
     # -
-    #   name: "[w,x) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[w,x)\""
+    #   name: "[Y,Z) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Y,Z)\""
     # -
-    #   name: "[x,y) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[x,y)\""
+    #   name: "[Z,a) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Z,a)\""
     # -
-    #   name: "[y,z) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[y,z)\""
+    #   name: "[a,g) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[a,g)\""
     # -
-    #   name: "[z,) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[z,)\""
+    #   name: "[g,n) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[g,n)\""
+    # -
+    #   name: "[n,t) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[n,t)\""
+    # -
+    #   name: "[t,) Bitbucket"
+    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[t,)\""
 
 julia:
   - "1.1"
