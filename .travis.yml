@@ -32,18 +32,18 @@ jobs:
     -
       name: "[C,D) GitHub"
       script: "./ci/travis/script.sh \"GITHUB\" \"[C,D)\""
-    # -
-    #   name: "[D,Dn) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[D,Dn)\""
-    # -
-    #   name: "[Dn,E) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[Dn,E)\""
-    # -
-    #   name: "[E,F) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[E,F)\""
-    # -
-    #   name: "[F,G) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[F,G)\""
+    -
+      name: "[D,Dn) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[D,Dn)\""
+    -
+      name: "[Dn,E) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[Dn,E)\""
+    -
+      name: "[E,F) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[E,F)\""
+    -
+      name: "[F,G) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[F,G)\""
     # -
     #   name: "[G,H) GitHub"
     #   script: "./ci/travis/script.sh \"GITHUB\" \"[G,H)\""
@@ -122,21 +122,21 @@ jobs:
     # -
     #   name: "[Y,Z) GitHub"
     #   script: "./ci/travis/script.sh \"GITHUB\" \"[Y,Z)\""
-    # -
-    #   name: "[Z,a) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[Z,a)\""
-    # -
-    #   name: "[a,g) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[a,g)\""
-    # -
-    #   name: "[g,n) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[g,n)\""
-    # -
-    #   name: "[n,t) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[n,t)\""
-    # -
-    #   name: "[t,) GitHub"
-    #   script: "./ci/travis/script.sh \"GITHUB\" \"[t,)\""
+    -
+      name: "[Z,a) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[Z,a)\""
+    -
+      name: "[a,g) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[a,g)\""
+    -
+      name: "[g,n) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[g,n)\""
+    -
+      name: "[n,t) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[n,t)\""
+    -
+      name: "[t,) GitHub"
+      script: "./ci/travis/script.sh \"GITHUB\" \"[t,)\""
     -
       name: "dry run [,B) GitLab"
       script: "./ci/travis/script.sh \"GITLAB\" \"[,B)\" \"FORCE_DRY_RUN\""
@@ -149,18 +149,18 @@ jobs:
     -
       name: "[C,D) GitLab"
       script: "./ci/travis/script.sh \"GITLAB\" \"[C,D)\""
-    # -
-    #   name: "[D,Dn) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[D,Dn)\""
-    # -
-    #   name: "[Dn,E) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[Dn,E)\""
-    # -
-    #   name: "[E,F) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[E,F)\""
-    # -
-    #   name: "[F,G) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[F,G)\""
+    -
+      name: "[D,Dn) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[D,Dn)\""
+    -
+      name: "[Dn,E) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[Dn,E)\""
+    -
+      name: "[E,F) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[E,F)\""
+    -
+      name: "[F,G) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[F,G)\""
     # -
     #   name: "[G,H) GitLab"
     #   script: "./ci/travis/script.sh \"GITLAB\" \"[G,H)\""
@@ -239,21 +239,21 @@ jobs:
     # -
     #   name: "[Y,Z) GitLab"
     #   script: "./ci/travis/script.sh \"GITLAB\" \"[Y,Z)\""
-    # -
-    #   name: "[Z,a) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[Z,a)\""
-    # -
-    #   name: "[a,g) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[a,g)\""
-    # -
-    #   name: "[g,n) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[g,n)\""
-    # -
-    #   name: "[n,t) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[n,t)\""
-    # -
-    #   name: "[t,) GitLab"
-    #   script: "./ci/travis/script.sh \"GITLAB\" \"[t,)\""
+    -
+      name: "[Z,a) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[Z,a)\""
+    -
+      name: "[a,g) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[a,g)\""
+    -
+      name: "[g,n) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[g,n)\""
+    -
+      name: "[n,t) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[n,t)\""
+    -
+      name: "[t,) GitLab"
+      script: "./ci/travis/script.sh \"GITLAB\" \"[t,)\""
     -
       name: "dry run [,B) Bitbucket"
       script: "./ci/travis/script.sh \"BITBUCKET\" \"[,B)\" \"FORCE_DRY_RUN\""
@@ -266,18 +266,18 @@ jobs:
     -
       name: "[C,D) Bitbucket"
       script: "./ci/travis/script.sh \"BITBUCKET\" \"[C,D)\""
-    # -
-    #   name: "[D,Dn) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[D,Dn)\""
-    # -
-    #   name: "[Dn,E) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Dn,E)\""
-    # -
-    #   name: "[E,F) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[E,F)\""
-    # -
-    #   name: "[F,G) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[F,G)\""
+    -
+      name: "[D,Dn) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[D,Dn)\""
+    -
+      name: "[Dn,E) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[Dn,E)\""
+    -
+      name: "[E,F) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[E,F)\""
+    -
+      name: "[F,G) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[F,G)\""
     # -
     #   name: "[G,H) Bitbucket"
     #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[G,H)\""
@@ -356,21 +356,21 @@ jobs:
     # -
     #   name: "[Y,Z) Bitbucket"
     #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Y,Z)\""
-    # -
-    #   name: "[Z,a) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[Z,a)\""
-    # -
-    #   name: "[a,g) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[a,g)\""
-    # -
-    #   name: "[g,n) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[g,n)\""
-    # -
-    #   name: "[n,t) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[n,t)\""
-    # -
-    #   name: "[t,) Bitbucket"
-    #   script: "./ci/travis/script.sh \"BITBUCKET\" \"[t,)\""
+    -
+      name: "[Z,a) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[Z,a)\""
+    -
+      name: "[a,g) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[a,g)\""
+    -
+      name: "[g,n) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[g,n)\""
+    -
+      name: "[n,t) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[n,t)\""
+    -
+      name: "[t,) Bitbucket"
+      script: "./ci/travis/script.sh \"BITBUCKET\" \"[t,)\""
 
 julia:
   - "1.1"
