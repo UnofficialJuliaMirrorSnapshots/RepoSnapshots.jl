@@ -1,6 +1,6 @@
 if [[ "$TRAVIS_JOB_TO_DO" == "RUNTESTS" ]]
 then
-    ./runtests.sh
+    ./ci/travis/runtests.sh
 else
-    ./snapshots.sh
+    ./ci/travis/snapshots.sh
 fi
