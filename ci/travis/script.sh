@@ -7,11 +7,13 @@ set -ev
 export JULIA_FLAGS="--check-bounds=yes --code-coverage=all --color=yes --compiled-modules=no --inline=no --project"
 echo "JULIA_FLAGS=$JULIA_FLAGS"
 
-export GIT_DESTINATION_HOST="$1"
+# export GIT_DESTINATION_HOST="$1"
+echo "GIT_DESTINATION_HOST=$GIT_DESTINATION_HOST"
 
-export TASK="$2"
+# export TASK="$2"
+echo "TASK=$TASK"
 
-export FORCE_DRY_RUN_ARGUMENT="$3"
+# export FORCE_DRY_RUN_ARGUMENT="$3"
 echo "FORCE_DRY_RUN_ARGUMENT=$FORCE_DRY_RUN_ARGUMENT"
 
 if [[ "$FORCE_DRY_RUN_ARGUMENT" == "FORCE_DRY_RUN" ]]
