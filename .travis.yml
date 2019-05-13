@@ -212,7 +212,7 @@ matrix:
     - env: GIT_DESTINATION_HOST="BITBUCKET" TASK="[g,n)"
     - env: GIT_DESTINATION_HOST="BITBUCKET" TASK="[n,t)"
     - env: GIT_DESTINATION_HOST="BITBUCKET" TASK="[t,)"
-  fast_finish: true
+  fast_finish: false
 notifications:
   email:
     on_failure: always
