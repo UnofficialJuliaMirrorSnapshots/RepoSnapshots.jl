@@ -1,14 +1,14 @@
-# Snapshots.jl - Take "snapshots" of the main branches of every repository in a GitHub organization
+# RepoSnapshots.jl - Take "snapshots" of the main branches of every repository in a GitHub organization
 
 <table>
     <tbody>
         <tr>
             <td>Travis CI</td>
-            <td><a href="https://travis-ci.com/UnofficialJuliaMirrorSnapshots/Snapshots.jl/branches"><img src="https://travis-ci.com/UnofficialJuliaMirrorSnapshots/Snapshots.jl.svg?branch=master"></a></td>
+            <td><a href="https://travis-ci.com/UnofficialJuliaMirrorSnapshots/RepoSnapshots.jl/branches"><img src="https://travis-ci.com/UnofficialJuliaMirrorSnapshots/RepoSnapshots.jl.svg?branch=master"></a></td>
         </tr>
         <tr>
             <td>Codecov</td>
-            <td><a href="https://codecov.io/gh/UnofficialJuliaMirrorSnapshots/Snapshots.jl"><img src="https://codecov.io/gh/UnofficialJuliaMirrorSnapshots/Snapshots.jl/branch/master/graph/badge.svg" /></a></td>
+            <td><a href="https://codecov.io/gh/UnofficialJuliaMirrorSnapshots/RepoSnapshots.jl"><img src="https://codecov.io/gh/UnofficialJuliaMirrorSnapshots/RepoSnapshots.jl/branch/master/graph/badge.svg" /></a></td>
         </tr>
         <tr>
             <td>Project Status</td>
@@ -21,12 +21,12 @@
     </tbody>
 </table>
 
-Snapshots.jl is a Julia application for taking "snapshots" of the main branches of every repository in a GitHub organization.
+RepoSnapshots.jl is a Julia application for taking "snapshots" of the main branches of every repository in a GitHub organization.
 
-Snapshots.jl (and its sibling project, [MirrorUpdater.jl](https://github.com/UnofficialJuliaMirror/MirrorUpdater.jl)) are used to maintain the
+RepoSnapshots.jl (and its sibling project, [MirrorUpdater.jl](https://github.com/UnofficialJuliaMirror/MirrorUpdater.jl)) are used to maintain the
 Julia package mirrors and snapshots hosted at:
 
-| | Mirrors | Snapshots |
+| | Mirrors | RepoSnapshots |
 | ------ | ------- | --------- |
 | GitHub | [https://github.com/UnofficialJuliaMirror](https://github.com/UnofficialJuliaMirror) | [https://github.com/UnofficialJuliaMirrorSnapshots](https://github.com/UnofficialJuliaMirrorSnapshots) |
 | GitLab | [https://gitlab.com/UnofficialJuliaMirror](https://gitlab.com/UnofficialJuliaMirror) | [https://gitlab.com/UnofficialJuliaMirrorSnapshots](https://gitlab.com/UnofficialJuliaMirrorSnapshots) |

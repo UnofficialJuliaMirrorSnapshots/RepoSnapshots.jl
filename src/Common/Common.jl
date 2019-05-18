@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module Common # Begin submodule Snapshots.Common
+module Common # Begin submodule RepoSnapshots.Common
 
 __precompile__(true)
 
@@ -417,6 +417,6 @@ function _snapshot_repo!!(
     return nothing
 end
 
-end # End submodule Snapshots.Common
+end # End submodule RepoSnapshots.Common
 
 ##### End of file

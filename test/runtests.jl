@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-import Snapshots
+import RepoSnapshots
 import Test # stdlib
 
 include("test-snapshot-utils.jl")

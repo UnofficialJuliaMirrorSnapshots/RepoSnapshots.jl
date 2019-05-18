@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module Types # Begin submodule Snapshots.Types
+module Types # Begin submodule RepoSnapshots.Types
 
 __precompile__(true)
 
@@ -196,6 +196,6 @@ function _construct_interval(x::String)::AbstractInterval
     return result
 end
 
-end # End submodule Snapshots.Types
+end # End submodule RepoSnapshots.Types
 
 ##### End of file

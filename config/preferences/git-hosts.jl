@@ -1,4 +1,4 @@
-import Snapshots
+import RepoSnapshots
 
 const GIT_DESTINATION_HOST = lowercase(strip(get(ENV, "GIT_DESTINATION_HOST", "",)))
 
@@ -9,7 +9,7 @@ if GIT_DESTINATION_HOST == "github"
     const GITHUB_BOT_PERSONAL_ACCESS_TOKEN =
         ENV["GITHUB_BOT_PERSONAL_ACCESS_TOKEN"]
     const src_provider =
-        Snapshots.Hosts.GitHubSrcHost.new_github_session(
+        RepoSnapshots.Hosts.GitHubSrcHost.new_github_session(
             ;
             github_organization = GITHUB_SRC_ORGANIZATION,
             github_bot_username = GITHUB_BOT_USERNAME,
@@ -17,7 +17,7 @@ if GIT_DESTINATION_HOST == "github"
                 GITHUB_BOT_PERSONAL_ACCESS_TOKEN,
             )
     const dst_provider =
-        Snapshots.Hosts.GitHubDstHost.new_github_session(
+        RepoSnapshots.Hosts.GitHubDstHost.new_github_session(
             ;
             github_organization = GITHUB_DST_ORGANIZATION,
             github_bot_username = GITHUB_BOT_USERNAME,
@@ -31,7 +31,7 @@ elseif GIT_DESTINATION_HOST == "gitlab"
     const GITLAB_BOT_PERSONAL_ACCESS_TOKEN =
         ENV["GITLAB_BOT_PERSONAL_ACCESS_TOKEN"]
     const src_provider =
-        Snapshots.Hosts.GitLabSrcHost.new_gitlab_session(
+        RepoSnapshots.Hosts.GitLabSrcHost.new_gitlab_session(
             ;
             gitlab_group = GITLAB_SRC_GROUP,
             gitlab_bot_username = GITLAB_BOT_USERNAME,
@@ -39,7 +39,7 @@ elseif GIT_DESTINATION_HOST == "gitlab"
                 GITLAB_BOT_PERSONAL_ACCESS_TOKEN,
             )
     const dst_provider =
-        Snapshots.Hosts.GitLabDstHost.new_gitlab_session(
+        RepoSnapshots.Hosts.GitLabDstHost.new_gitlab_session(
             ;
             gitlab_group = GITLAB_DST_GROUP,
             gitlab_bot_username = GITLAB_BOT_USERNAME,
@@ -56,7 +56,7 @@ elseif GIT_DESTINATION_HOST == "bitbucket"
     const BITBUCKET_BOT_APP_PASSWORD =
         ENV["BITBUCKET_BOT_APP_PASSWORD"]
     const src_provider =
-        Snapshots.Hosts.GitHubSrcHost.new_github_session(
+        RepoSnapshots.Hosts.GitHubSrcHost.new_github_session(
             ;
             github_organization = GITHUB_SRC_ORGANIZATION,
             github_bot_username = GITHUB_BOT_USERNAME,
@@ -64,7 +64,7 @@ elseif GIT_DESTINATION_HOST == "bitbucket"
                 GITHUB_BOT_PERSONAL_ACCESS_TOKEN,
             )
     const dst_provider =
-        Snapshots.Hosts.BitbucketDstHost.new_bitbucket_session(
+        RepoSnapshots.Hosts.BitbucketDstHost.new_bitbucket_session(
             ;
             bitbucket_team = BITBUCKET_DST_TEAM,
             bitbucket_bot_username = BITBUCKET_BOT_USERNAME,

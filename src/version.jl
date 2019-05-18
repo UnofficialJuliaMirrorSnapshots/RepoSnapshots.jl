@@ -29,10 +29,10 @@ function _version_string(x::_TomlFile)::String
 end
 
 function _version_string()::String
-    Snapshots_toml_file::_TomlFile = _TomlFile(
+    RepoSnapshots_toml_file::_TomlFile = _TomlFile(
         package_directory("Project.toml")
         )
-    result_versionstring::String = _version_string(Snapshots_toml_file)
+    result_versionstring::String = _version_string(RepoSnapshots_toml_file)
     return result_versionstring
 end
 
@@ -75,7 +75,7 @@ end
 """
     version()::VersionNumber
 
-Return the version number of Snapshots.
+Return the version number of RepoSnapshots.
 """
 function version()::VersionNumber
     result_versionstring::String = _version_string()

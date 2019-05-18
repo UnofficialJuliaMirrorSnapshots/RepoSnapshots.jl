@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module Hosts # Begin submodule Snapshots.Hosts
+module Hosts # Begin submodule RepoSnapshots.Hosts
 
 __precompile__(true)
 
@@ -18,6 +18,6 @@ include(joinpath("GitHubDstHost", "GitHubDstHost.jl"))
 include(joinpath("GitLabSrcHost", "GitLabSrcHost.jl"))
 include(joinpath("GitLabDstHost", "GitLabDstHost.jl"))
 
-end # End submodule Snapshots.Hosts
+end # End submodule RepoSnapshots.Hosts
 
 ##### End of file

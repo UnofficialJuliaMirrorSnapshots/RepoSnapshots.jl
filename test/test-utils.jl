@@ -2,26 +2,26 @@
 
 Test.@testset "git tests" begin
 
-    git = Snapshots.Utils._get_git_binary_path()
+    git = RepoSnapshots.Utils._get_git_binary_path()
     @info(string("git: "), git,)
 
     git_version_cmd = `$(git) --version`
     @info(string("Attempting to run command: "), git_version_cmd,)
     Test.@test(
-            Snapshots.Utils.command_ran_successfully!!(
+            RepoSnapshots.Utils.command_ran_successfully!!(
                     git_version_cmd
                     )
             )
 
     Test.@test(
-            Snapshots.Utils.command_ran_successfully!!(
+            RepoSnapshots.Utils.command_ran_successfully!!(
                     `$(git) --version`
                     )
             )
 
 #     Test.@test_throws(
 #             ErrorException,
-#             Snapshots.Utils.command_ran_successfully!!(
+#             RepoSnapshots.Utils.command_ran_successfully!!(
 #                     `$(git) --versionBLAHBLAHBLAH`;
 #                     max_attempts = 5,
 #                     seconds_to_wait_between_attempts = 5,
@@ -32,7 +32,7 @@ Test.@testset "git tests" begin
 
 #     Test.@test_throws(
 #             ErrorException,
-#             Snapshots.Utils.command_ran_successfully!!(
+#             RepoSnapshots.Utils.command_ran_successfully!!(
 #                     `$(git) --versionBLAHBLAHBLAH`;
 #                     max_attempts = 5,
 #                     seconds_to_wait_between_attempts = 5,
@@ -43,7 +43,7 @@ Test.@testset "git tests" begin
 
 #     Test.@test_throws(
 #             ErrorException,
-#             Snapshots.Utils.command_ran_successfully!!(
+#             RepoSnapshots.Utils.command_ran_successfully!!(
 #                     `$(git) --versionBLAHBLAHBLAH`;
 #                     max_attempts = 5,
 #                     seconds_to_wait_between_attempts = 5,
@@ -54,7 +54,7 @@ Test.@testset "git tests" begin
 
     Test.@test(
             !(
-                    Snapshots.Utils.command_ran_successfully!!(
+                    RepoSnapshots.Utils.command_ran_successfully!!(
                             `$(git) --versionBLAHBLAHBLAH`;
                             max_attempts = 5,
                             seconds_to_wait_between_attempts = 5,
@@ -70,7 +70,7 @@ Test.@testset "git tests" begin
 
     Test.@test(
             "Hello There" ==
-                    Snapshots.Utils.retry_function_until_success(
+                    RepoSnapshots.Utils.retry_function_until_success(
                             () -> f_1()
                             )
             )
@@ -94,7 +94,7 @@ Test.@testset "git tests" begin
 
     Test.@test(
             "General Kenobi" ==
-                    Snapshots.Utils.retry_function_until_success(
+                    RepoSnapshots.Utils.retry_function_until_success(
                             () -> f_2(f_2_counter);
                             max_attempts = 10,
                             seconds_to_wait_between_attempts = 5,
@@ -107,7 +107,7 @@ Test.@testset "git tests" begin
 
 #     Test.@test_throws(
 #             ErrorException,
-#             Snapshots.Utils.retry_function_until_success(
+#             RepoSnapshots.Utils.retry_function_until_success(
 #         ()->f_3();
 #         max_attempts = 5,
 #         seconds_to_wait_between_attempts = 5,
@@ -123,8 +123,8 @@ Test.@testset "git tests" begin
     run(`$(git) init --bare`)
     cd(temp_directory_1)
     run(`$(git) init`)
-    Snapshots.Utils.git_add_all!()
-    Snapshots.Utils.git_commit!(
+    RepoSnapshots.Utils.git_add_all!()
+    RepoSnapshots.Utils.git_commit!(
         ;
         message="test commit 1",
         allow_empty=true,
@@ -136,47 +136,47 @@ Test.@testset "git tests" begin
     run(`git branch branch3`)
     run(`git checkout master`)
     Test.@test(
-        typeof(Snapshots.Utils.git_version()) <: VersionNumber
+        typeof(RepoSnapshots.Utils.git_version()) <: VersionNumber
         )
     Test.@test(
-        typeof(Snapshots.Utils.get_all_branches_local()) <:
+        typeof(RepoSnapshots.Utils.get_all_branches_local()) <:
             Vector{String}
         )
     Test.@test(
-        typeof(Snapshots.Utils.get_all_branches_local_and_remote()) <:
+        typeof(RepoSnapshots.Utils.get_all_branches_local_and_remote()) <:
             Vector{String}
         )
     Test.@test(
-        typeof(Snapshots.Utils.get_current_branch()) <: String )
+        typeof(RepoSnapshots.Utils.get_current_branch()) <: String )
     Test.@test(
-        Snapshots.Utils.branch_exists("branch1") )
+        RepoSnapshots.Utils.branch_exists("branch1") )
     Test.@test(
-        !Snapshots.Utils.branch_exists("non-existent-branch") )
+        !RepoSnapshots.Utils.branch_exists("non-existent-branch") )
     Test.@test(
-        !Snapshots.Utils.branch_exists("non-existent-but-create-me") )
+        !RepoSnapshots.Utils.branch_exists("non-existent-but-create-me") )
     Test.@test(
-        typeof(Snapshots.Utils.checkout_branch!("branch1")) <: Nothing )
+        typeof(RepoSnapshots.Utils.checkout_branch!("branch1")) <: Nothing )
 #     Test.@test_throws(
 #         ErrorException,
-#         Snapshots.Utils.checkout_branch!("non-existent-branch"),
+#         RepoSnapshots.Utils.checkout_branch!("non-existent-branch"),
 #         )
     Test.@test_warn(
         "",
-        Snapshots.Utils.checkout_branch!(
+        RepoSnapshots.Utils.checkout_branch!(
             "non-existent-branch";
             error_on_failure=false,
             ),
         )
     Test.@test(
         typeof(
-            Snapshots.Utils.checkout_branch!(
+            RepoSnapshots.Utils.checkout_branch!(
                 "non-existent-but-create-me";
                 create=true,
                 )
             ) <: Nothing
         )
-    Snapshots.Utils.git_add_all!()
-    Snapshots.Utils.git_commit!(
+    RepoSnapshots.Utils.git_add_all!()
+    RepoSnapshots.Utils.git_commit!(
         ;
         message="test commit 2",
         allow_empty=true,
@@ -185,17 +185,17 @@ Test.@testset "git tests" begin
         )
     run(`git checkout master`)
     Test.@test(
-        Snapshots.Utils.branch_exists("branch1")
+        RepoSnapshots.Utils.branch_exists("branch1")
         )
     Test.@test(
-        !Snapshots.Utils.branch_exists("non-existent-branch")
+        !RepoSnapshots.Utils.branch_exists("non-existent-branch")
         )
     Test.@test(
-        Snapshots.Utils.branch_exists("non-existent-but-create-me")
+        RepoSnapshots.Utils.branch_exists("non-existent-but-create-me")
         )
     run(`$(git) remote add origin $(temp_directory_2)`)
     Test.@test(
-        typeof(Snapshots.Utils.git_push_upstream_all!()) <: Nothing
+        typeof(RepoSnapshots.Utils.git_push_upstream_all!()) <: Nothing
         )
     run(`git checkout master`)
     include_patterns::Vector{Regex} = Regex[
@@ -206,7 +206,7 @@ Test.@testset "git tests" begin
         r"^brANcH3$"i,
         ]
     branches_to_snapshot::Vector{String} =
-        Snapshots.Utils.make_list_of_branches_to_snapshot(
+        RepoSnapshots.Utils.make_list_of_branches_to_snapshot(
             ;
             default_branch = "maSTeR",
             include = include_patterns,
@@ -220,8 +220,8 @@ Test.@testset "git tests" begin
     Test.@test( branches_to_snapshot[1] == "branch1" )
     Test.@test( branches_to_snapshot[2] == "master" )
     cd(previous_directory)
-    Snapshots.Utils.delete_everything_except_dot_git!(temp_directory_1)
-    Snapshots.Utils.delete_only_dot_git!(temp_directory_2)
+    RepoSnapshots.Utils.delete_everything_except_dot_git!(temp_directory_1)
+    RepoSnapshots.Utils.delete_only_dot_git!(temp_directory_2)
     rm(temp_directory_1; recursive=true, force=true)
     rm(temp_directory_2; recursive=true, force=true)
 
