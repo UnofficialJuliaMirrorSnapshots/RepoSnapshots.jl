@@ -8,8 +8,8 @@ function _get_git_binary_path()::String
     if !isfile(deps_jl_file_path)
         delayederror(
             string(
-                "Snapshots.jl is not properly installed. ",
-                "Please run\nPkg.build(\"Snapshots\")",
+                "RepoSnapshots.jl is not properly installed. ",
+                "Please run\nPkg.build(\"RepoSnapshots\")",
                 )
             )
     end

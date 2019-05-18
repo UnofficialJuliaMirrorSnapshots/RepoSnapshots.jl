@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module GitLabSrcHost # Begin submodule Snapshots.Hosts.GitLabSrcHost
+module GitLabSrcHost # Begin submodule RepoSnapshots.Hosts.GitLabSrcHost
 
 __precompile__(true)
 
@@ -702,6 +702,6 @@ function new_gitlab_session(
     return _gitlab_provider
 end
 
-end # End submodule Snapshots.Hosts.GitLabSrcHost
+end # End submodule RepoSnapshots.Hosts.GitLabSrcHost
 
 ##### End of file

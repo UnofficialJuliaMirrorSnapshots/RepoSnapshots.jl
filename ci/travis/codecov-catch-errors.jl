@@ -11,9 +11,9 @@ end
 
 import Coverage
 
-import Snapshots
+import RepoSnapshots
 
-cd(Snapshots.package_directory())
+cd(RepoSnapshots.package_directory())
 
 try
     Coverage.Codecov.submit(Coverage.Codecov.process_folder())

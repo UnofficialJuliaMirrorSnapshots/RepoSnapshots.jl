@@ -15,9 +15,9 @@ export INSTALL_GITLFS="true"
 echo "INSTALL_GIT=$INSTALL_GIT"
 echo "INSTALL_GITLFS=$INSTALL_GITLFS"
 
-julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("Snapshots");'
-julia $JULIA_FLAGS -e 'import Snapshots;'
-julia $JULIA_FLAGS -e 'import Pkg; Pkg.test("Snapshots"; coverage=true);'
+julia $JULIA_FLAGS -e 'import Pkg; Pkg.build("RepoSnapshots");'
+julia $JULIA_FLAGS -e 'import RepoSnapshots;'
+julia $JULIA_FLAGS -e 'import Pkg; Pkg.test("RepoSnapshots"; coverage=true);'
 
 cat Project.toml
 cat Manifest.toml

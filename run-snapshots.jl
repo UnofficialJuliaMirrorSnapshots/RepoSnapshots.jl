@@ -1,8 +1,8 @@
 ##### Beginning of file
 
-@info("Importing the Snapshots module...")
+@info("Importing the RepoSnapshots module...")
 
-import Snapshots
+import RepoSnapshots
 
 import TimeZones
 
@@ -32,7 +32,7 @@ include(
         )
     )
 
-Snapshots.CommandLine.run_snapshots_command_line!!(
+RepoSnapshots.CommandLine.run_snapshots_command_line!!(
     ;
     arguments = ARGS,
     git_user_name = GIT_USER_NAME,

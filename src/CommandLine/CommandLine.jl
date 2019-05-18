@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module CommandLine # Begin submodule Snapshots.CommandLine
+module CommandLine # Begin submodule RepoSnapshots.CommandLine
 
 __precompile__(true)
 
@@ -36,7 +36,7 @@ function run_snapshots_command_line!!(
         )::Nothing
     @info(
         string(
-            "Running Snapshots.CommandLine.",
+            "Running RepoSnapshots.CommandLine.",
             "run_snapshots_command_line!!"
             )
         )
@@ -105,6 +105,6 @@ function _process_parsed_arguments(parsed_arguments::Dict)::Dict{Symbol, Any}
     return result
 end
 
-end # End submodule Snapshots.CommandLine
+end # End submodule RepoSnapshots.CommandLine
 
 ##### End of file

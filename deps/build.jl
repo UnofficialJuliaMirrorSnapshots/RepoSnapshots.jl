@@ -48,7 +48,7 @@ end
 
 function _install_git_conda()::String
     @info("Attempting to install Git using Conda.jl...")
-    environment::Symbol = :Snapshots
+    environment::Symbol = :RepoSnapshots
     Conda.add("git", environment)
     @info("Successfully installed Git using Conda.jl.")
     git_cmd::String = strip(

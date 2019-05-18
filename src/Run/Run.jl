@@ -1,6 +1,6 @@
 ##### Beginning of file
 
-module Run # Begin submodule Snapshots.Run
+module Run # Begin submodule RepoSnapshots.Run
 
 __precompile__(true)
 
@@ -36,7 +36,7 @@ function run_snapshots!!(
         time_zone::Dates.TimeZone =
             Dates.TimeZone("America/New_York"),
         )::Nothing
-    @info("Running Snapshots.Run.run_snapshots!!")
+    @info("Running RepoSnapshots.Run.run_snapshots!!")
 
     all_src_organization_repos::Vector{String} = src_provider(:list_all_repos)()
 
@@ -123,6 +123,6 @@ function run_snapshots!!(
     return nothing
 end
 
-end # End submodule Snapshots.Run
+end # End submodule RepoSnapshots.Run
 
 ##### End of file
